@@ -11,8 +11,11 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    SharedModule ,
+    // SharedModule ,
     RouterModule  // 🔥 REQUIRED
+  ],
+   exports: [
+    LandingComponent   // ✅ optional but safe
   ]
 })
 export class LandingModule {}

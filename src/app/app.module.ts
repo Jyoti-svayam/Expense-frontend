@@ -9,10 +9,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LandingModule } from './features/landing/landing.module';
 import { AuthModule } from './features/auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +23,9 @@ import { AuthModule } from './features/auth/auth.module';
     HttpClientModule,
     ToastrModule.forRoot(),
      LandingModule,
-     AuthModule
+     AuthModule,
+     SharedModule,
+     
   ],
   providers: [],
   bootstrap: [AppComponent]
