@@ -1,0 +1,97 @@
+.auth-page {
+  height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 20px;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 15px;
+
+  width: 100%;
+  max-width: 400px;
+  color: white;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: white;
+  color: #333;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+}
+
+small {
+  color: #ffdede;
+  font-size: 12px;
+}
+.switch a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+/* 🔴 Invalid Input */
+input.invalid {
+  border: 1px solid red;
+}
+
+/* 🔴 Error Text */
+small {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Password mismatch */
+.error {
+  display: block;
+  margin-bottom: 10px;
+}

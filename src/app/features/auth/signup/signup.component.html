@@ -1,0 +1,87 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <h2>Create Account 🚀</h2>
+    <p class="subtitle">Start tracking your expenses smartly</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Name -->
+      <div class="form-group">
+        <input 
+          type="text" 
+          placeholder="Full Name" 
+          formControlName="name"
+          [class.invalid]="(submitted || f['name']?.touched) && f['name']?.invalid"
+        />
+        <small *ngIf="(submitted || f['name']?.touched) && f['name']?.errors?.['required']">
+          Name is required
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <input 
+          type="email" 
+          placeholder="Email Address" 
+          formControlName="email"
+          [class.invalid]="(submitted || f['email']?.touched) && f['email']?.invalid"
+        />
+        <small *ngIf="(submitted || f['email']?.touched) && f['email']?.errors?.['required']">
+          Email is required
+        </small>
+        <small *ngIf="(submitted || f['email']?.touched) && f['email']?.errors?.['email']">
+          Enter a valid email
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <input 
+          type="password" 
+          placeholder="Password" 
+          formControlName="password"
+          [class.invalid]="(submitted || f['password']?.touched) && f['password']?.invalid"
+        />
+        <small *ngIf="(submitted || f['password']?.touched) && f['password']?.errors?.['required']">
+          Password is required
+        </small>
+        <small *ngIf="(submitted || f['password']?.touched) && f['password']?.errors?.['minlength']">
+          Minimum 6 characters required
+        </small>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <input 
+          type="password" 
+          placeholder="Confirm Password" 
+          formControlName="confirmPassword"
+          [class.invalid]="(submitted || f['confirmPassword']?.touched) && f['confirmPassword']?.invalid"
+        />
+        <small *ngIf="(submitted || f['confirmPassword']?.touched) && f['confirmPassword']?.errors?.['required']">
+          Confirm your password
+        </small>
+      </div>
+
+      <!-- Match Error -->
+      <small class="error" *ngIf="(submitted || form.touched) && form?.errors?.['mismatch']">
+        Passwords do not match
+      </small>
+
+      <!-- Submit -->
+      <button type="submit" class="primary" [disabled]="loading">
+        <span *ngIf="loading">Creating account...</span>
+        <span *ngIf="!loading">Signup</span>
+      </button>
+
+      <!-- Footer -->
+      <p class="switch">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </p>
+
+    </form>
+
+  </div>
+</div>

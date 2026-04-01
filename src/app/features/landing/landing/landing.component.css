@@ -1,0 +1,90 @@
+/* FULL PAGE FIX */
+.hero {
+  height: calc(100vh - 60px); /* 🔥 subtract navbar height */
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+/* CONTENT BOX */
+.hero-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* TITLE */
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: black;
+}
+
+/* TEXT */
+.hero p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BUTTON BASE */
+button {
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* PRIMARY */
+.primary {
+  background: white;
+  color: #333;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+}
+
+/* SECONDARY */
+.secondary {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  button {
+    margin: 0 10px;
+    min-width: 150px;
+  }
+}
