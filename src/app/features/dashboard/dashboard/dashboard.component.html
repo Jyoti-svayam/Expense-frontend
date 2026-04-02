@@ -95,7 +95,9 @@
     <div class="right">
       <mat-card>
         <h3>Expense Analysis</h3>
-        <canvas id="expenseChart"></canvas>
+        <div class="chart-container">
+          <canvas id="expenseChart"></canvas>
+        </div>
       </mat-card>
     </div>
 
@@ -103,28 +105,40 @@
 
 </div>
 
-<!-- NOTES POPUP -->
+<!-- NOTES MODAL -->
 <div class="overlay" *ngIf="selectedNote">
-  <mat-card class="note-card">
-    <div class="note-header">
-      <h3>Notes</h3>
-      <button mat-icon-button (click)="closeNotes()">❌</button>
-    </div>
+
+  <mat-card class="modal-card">
+
+    <button class="close-btn" (click)="closeNotes()">✖</button>
+
+    <h3>Notes</h3>
+
     <p>{{ selectedNote }}</p>
+
   </mat-card>
+
 </div>
 
-<!-- DELETE POPUP -->
+<!-- DELETE MODAL -->
 <div class="overlay" *ngIf="selectedDeleteIndex !== null">
-  <mat-card class="delete-card">
+
+  <mat-card class="modal-card">
+
+    <button class="close-btn" (click)="closeDeleteDialog()">✖</button>
+
     <h3>Delete Expense ⚠️</h3>
-    <p>Are you sure you want to delete this expense?</p>
+
+    <p>This action cannot be undone.</p>
 
     <div class="actions">
-      <button mat-button (click)="closeDeleteDialog()">Cancel</button>
+      <button mat-stroked-button (click)="closeDeleteDialog()">Cancel</button>
+
       <button mat-raised-button color="warn" (click)="confirmDelete()">
         Delete
       </button>
     </div>
+
   </mat-card>
+
 </div>

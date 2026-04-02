@@ -103,17 +103,27 @@ export class DashboardComponent implements AfterViewInit {
       this.remaining
     ];
 
-    new Chart("expenseChart", {
-      type: 'doughnut',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            data: values,
-            backgroundColor: ['#4caf50', '#ff9800', '#9c27b0', '#e0e0e0']
-          }
-        ]
+   new Chart("expenseChart", {
+  type: 'doughnut',
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        data: values,
+        backgroundColor: ['#4caf50', '#ff9800', '#9c27b0', '#e0e0e0']
       }
-    });
+    ]
+  },
+  options: {
+    responsive: true,              // ✅ MUST
+    maintainAspectRatio: false,    // ✅ VERY IMPORTANT
+
+    plugins: {
+      legend: {
+        position: 'bottom'         // better for mobile
+      }
+    }
+  }
+});
   }
 }
