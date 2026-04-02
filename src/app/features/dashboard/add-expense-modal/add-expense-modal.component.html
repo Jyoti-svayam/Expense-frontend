@@ -1,1 +1,81 @@
-<p>add-expense-modal works!</p>
+<div class="modal-header">
+  <h2>Add Expense</h2>
+  <button mat-icon-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <!-- TITLE -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+  <small *ngIf="submitted && f['title']?.errors?.['required']">
+    Title is required
+  </small>
+  <small *ngIf="submitted && f['title']?.errors?.['minlength']">
+    Min 3 characters required
+  </small>
+
+  <!-- AMOUNT -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Amount</mat-label>
+    <input matInput type="number" formControlName="amount">
+  </mat-form-field>
+  <small *ngIf="submitted && f['amount']?.errors">
+    Amount is required
+  </small>
+
+  <!-- DATE -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Date</mat-label>
+    <input matInput type="date" formControlName="date">
+  </mat-form-field>
+
+  <!-- CATEGORY -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option value="Food">Food</mat-option>
+      <mat-option value="Travel">Travel</mat-option>
+      <mat-option value="Shopping">Shopping</mat-option>
+      <mat-option value="Bills">Bills</mat-option>
+      <mat-option value="Entertainment">Entertainment</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- PAYMENT -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Payment Mode</mat-label>
+    <mat-select formControlName="payment">
+      <mat-option value="Cash">Cash</mat-option>
+      <mat-option value="UPI">UPI</mat-option>
+      <mat-option value="Card">Card</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- CURRENCY -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Currency</mat-label>
+    <mat-select formControlName="currency">
+      <mat-option value="INR">INR</mat-option>
+      <mat-option value="USD">USD</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- NOTES -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Notes</mat-label>
+    <textarea matInput formControlName="notes"></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-stroked-button type="button" (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">
+      Add Expense
+    </button>
+  </div>
+
+</form>

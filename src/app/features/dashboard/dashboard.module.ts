@@ -7,11 +7,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     DashboardComponent

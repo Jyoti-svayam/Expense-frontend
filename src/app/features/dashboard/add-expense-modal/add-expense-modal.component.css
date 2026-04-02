@@ -1,0 +1,33 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.full {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.full {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+small {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

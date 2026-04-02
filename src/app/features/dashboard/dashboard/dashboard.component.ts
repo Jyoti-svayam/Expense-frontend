@@ -1,5 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { MatDialog } from '@angular/material/dialog';
+import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
 
 Chart.register(...registerables);
 
@@ -9,7 +11,8 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements AfterViewInit {
-
+  
+  constructor(private dialog: MatDialog) {}
   userName = "Vishal";
 
   budget = 5000;
@@ -91,6 +94,21 @@ export class DashboardComponent implements AfterViewInit {
       this.closeDeleteDialog();
     }
   }
+openAddExpense() {
+  const dialogRef = this.dialog.open(AddExpenseModalComponent, {
+    width: '40vw',        // ✅ responsive width
+    height: '70vh',       // ✅ height control
+    maxWidth: '95vw',     // mobile safety
+    panelClass: 'custom-dialog',
+    disableClose: true
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.dataSource = [...this.dataSource, result];
+    }
+  });
+}
 
   ngAfterViewInit(): void {
     const labels = [

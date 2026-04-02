@@ -30,4 +30,11 @@ button {
     padding: 30px;
   }
 }
+.custom-dialog .mat-mdc-dialog-container {
+  backdrop-filter: blur(10px);
+}
 
+.cdk-overlay-backdrop {
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.4);
+}
