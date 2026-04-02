@@ -11,10 +11,12 @@ import { FormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    AddExpenseModalComponent
   ],
   imports: [
     CommonModule,
