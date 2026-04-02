@@ -1,7 +1,130 @@
 <div class="dashboard">
-  <h2>Welcome to Dashboard 🎉</h2>
 
-  <p>Your expense overview will appear here</p>
+  <!-- GREETING -->
+  <div class="greet">
+    <h2>Hi, {{ userName }} 👋</h2>
+  </div>
 
-  <button (click)="logout()">Logout</button>
+  <!-- CARDS -->
+  <div class="cards">
+    <mat-card class="card">₹{{ budget }}<br>Budget</mat-card>
+    <mat-card class="card">₹{{ totalExpense }}<br>Expense</mat-card>
+    <mat-card class="card">₹{{ remaining }}<br>Remaining</mat-card>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-section">
+
+    <!-- TABLE -->
+    <mat-card class="table-card">
+
+      <h3>Recent Expenses</h3>
+
+      <table mat-table [dataSource]="dataSource" class="modern-table">
+
+        <!-- Title -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let e">{{ e.title }}</td>
+        </ng-container>
+
+        <!-- Amount -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let e">₹{{ e.amount }}</td>
+        </ng-container>
+
+        <!-- Category -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let e">
+            <span class="badge">{{ e.category }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Date -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let e">{{ e.date }}</td>
+        </ng-container>
+
+        <!-- Payment -->
+        <ng-container matColumnDef="payment">
+          <th mat-header-cell *matHeaderCellDef>Payment</th>
+          <td mat-cell *matCellDef="let e">{{ e.payment }}</td>
+        </ng-container>
+
+        <!-- Notes -->
+        <ng-container matColumnDef="notes">
+          <th mat-header-cell *matHeaderCellDef>Notes</th>
+          <td mat-cell *matCellDef="let e">
+            <button mat-button color="primary" (click)="openNotes(e.notes)">
+              View
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Update -->
+        <ng-container matColumnDef="update">
+          <th mat-header-cell *matHeaderCellDef>Update</th>
+          <td mat-cell *matCellDef="let e">
+            <button mat-icon-button color="primary" (click)="updateExpense(e)">
+              ✏️
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Delete -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>Delete</th>
+          <td mat-cell *matCellDef="let e; let i = index">
+            <button mat-icon-button color="warn" (click)="openDeleteDialog(i)">
+              🗑️
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+    </mat-card>
+
+    <!-- CHART -->
+    <div class="right">
+      <mat-card>
+        <h3>Expense Analysis</h3>
+        <canvas id="expenseChart"></canvas>
+      </mat-card>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- NOTES POPUP -->
+<div class="overlay" *ngIf="selectedNote">
+  <mat-card class="note-card">
+    <div class="note-header">
+      <h3>Notes</h3>
+      <button mat-icon-button (click)="closeNotes()">❌</button>
+    </div>
+    <p>{{ selectedNote }}</p>
+  </mat-card>
+</div>
+
+<!-- DELETE POPUP -->
+<div class="overlay" *ngIf="selectedDeleteIndex !== null">
+  <mat-card class="delete-card">
+    <h3>Delete Expense ⚠️</h3>
+    <p>Are you sure you want to delete this expense?</p>
+
+    <div class="actions">
+      <button mat-button (click)="closeDeleteDialog()">Cancel</button>
+      <button mat-raised-button color="warn" (click)="confirmDelete()">
+        Delete
+      </button>
+    </div>
+  </mat-card>
 </div>

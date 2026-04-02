@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]   // ✅ Yaha lagana hai
+    // canActivate: [AuthGuard]   // ✅ Yaha lagana hai
   },
 
   { path: '**', redirectTo: 'landing' }

@@ -10,6 +10,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LandingModule } from './features/landing/landing.module';
 import { AuthModule } from './features/auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { DashboardModule } from './features/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
      LandingModule,
      AuthModule,
      SharedModule,
-     
+     DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

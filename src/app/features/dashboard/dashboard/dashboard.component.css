@@ -1,0 +1,112 @@
+.dashboard {
+  padding: 20px;
+}
+
+/* Greeting */
+.greet {
+  margin-bottom: 10px;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* MAIN LAYOUT */
+.main-section {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr; /* 70% - 30% */
+  gap: 20px;
+}
+
+/* LEFT TABLE */
+.left mat-card {
+  padding: 15px;
+}
+
+/* RIGHT CHART */
+.right mat-card {
+  padding: 15px;
+  text-align: center;
+}
+
+/* HEADER CENTER */
+th.mat-header-cell {
+  text-align: center !important;
+  justify-content: center;
+}
+
+/* CELL CENTER */
+td.mat-cell {
+  text-align: center;
+}
+
+/* OPTIONAL: HEADER FLEX FIX (Angular Material) */
+.mat-header-row, .mat-row {
+  align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-section {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+/* TABLE */
+/* TABLE */
+.modern-table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+/* HEADER */
+th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+/* CELL */
+td, th {
+  padding: 12px;
+  text-align: center;
+  border-right: 1px solid #e0e0e0; /* 🔥 column line */
+}
+
+/* REMOVE LAST BORDER */
+td:last-child, th:last-child {
+  border-right: none;
+}
+
+/* ROW BORDER */
+tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* HOVER EFFECT */
+tr:hover {
+  background: #fafafa;
+  transition: 0.2s;
+}
+
+/* BADGE */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #e3f2fd;
+  font-size: 12px;
+}
