@@ -11,6 +11,12 @@ import { LandingModule } from './features/landing/landing.module';
 import { AuthModule } from './features/auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './features/dashboard/dashboard.module';
+import { LottieModule } from 'ngx-lottie';
+import * as player from 'lottie-web';
+
+export function playerFactory() : any {
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -20,6 +26,7 @@ import { DashboardModule } from './features/dashboard/dashboard.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+   LottieModule.forRoot({ player: playerFactory }),
      ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),

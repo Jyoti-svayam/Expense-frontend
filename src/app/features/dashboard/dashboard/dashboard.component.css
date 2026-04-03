@@ -213,3 +213,11 @@ td.mat-cell {
     font-size: 12px;
   }
 }
+#name{
+  padding: 4px;
+  margin: 4px;
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+  font-style: normal;
+
+}

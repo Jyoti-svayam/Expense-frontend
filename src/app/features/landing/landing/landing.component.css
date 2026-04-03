@@ -1,90 +1,72 @@
-/* FULL PAGE FIX */
+/* Remove body scroll */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Hero full screen */
 .hero {
-  height: calc(100vh - 60px); /* 🔥 subtract navbar height */
-  width: 100%;
-
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 20px;
+  align-items: center;       /* ✅ vertical center */
+  justify-content: center;   /* ✅ whole content center */
+  height: 100vh;
+  padding: 0 6%;
   box-sizing: border-box;
-
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  background: #0f172a;
   color: white;
+  gap: 60px;                 /* ✅ space between text & animation */
 }
 
-/* CONTENT BOX */
+/* Fix h-screen issue */
+.hero .h-screen {
+  height: auto !important;
+}
+
+/* Text container */
 .hero-card {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 30px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  max-width: 500px;
-  width: 100%;
+  max-width: 600px;
 }
 
-/* TITLE */
-.hero h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  color: black;
+/* Heading (BIG & clean) */
+.hero-card h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  line-height: 1.2;
 }
 
-/* TEXT */
-.hero p {
-  font-size: 1rem;
-  opacity: 0.9;
+/* Text */
+.hero-card p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  color: #cbd5e1;
 }
 
-/* BUTTONS */
-.buttons {
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* BUTTON BASE */
-button {
-  margin: 8px 0;
-  padding: 12px;
-  border-radius: 8px;
+/* Button */
+.primary {
+  padding: 14px 30px;
+  border-radius: 10px;
   border: none;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-/* PRIMARY */
-.primary {
-  background: white;
-  color: #333;
+/* Animation container */
+.hero > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.primary:hover {
-  transform: translateY(-2px);
+/* 🔥 Bigger animation */
+ng-lottie {
+  width: 500px !important;
+  height: 500px !important;
 }
 
-/* SECONDARY */
-.secondary {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-}
-
-/* DESKTOP */
-@media (min-width: 768px) {
-  .hero h1 {
-    font-size: 3rem;
-  }
-
-  .buttons {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  button {
-    margin: 0 10px;
-    min-width: 150px;
-  }
+/* Prevent overflow */
+.hero > * {
+  max-height: 100%;
 }
