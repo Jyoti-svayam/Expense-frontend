@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h2>Add Expense</h2>
+<h2>{{ data ? 'Edit Expense' : 'Add Expense' }}</h2>
   <button mat-icon-button (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
@@ -73,9 +73,9 @@
 
   <div class="actions">
     <button mat-stroked-button type="button" (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">
-      Add Expense
-    </button>
+   <button mat-raised-button color="primary" type="submit">
+  {{ data ? 'Update' : 'Add Expense' }}
+</button>
   </div>
 
 </form>

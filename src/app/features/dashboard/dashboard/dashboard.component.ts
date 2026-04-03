@@ -74,9 +74,22 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   // Update
-  updateExpense(element: any) {
-    console.log("Update clicked:", element);
-  }
+ openEditExpense(element: any, index: number) {
+  const dialogRef = this.dialog.open(AddExpenseModalComponent, {
+    width: '40vw',
+    height: '70vh',
+    data: { ...element, index },   // ✅ data pass
+    panelClass: 'custom-dialog',
+    disableClose: true
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.dataSource[index] = result;   // ✅ update row
+      this.dataSource = [...this.dataSource]; // refresh table
+    }
+  });
+}
 
   // Delete popup
   openDeleteDialog(index: number) {

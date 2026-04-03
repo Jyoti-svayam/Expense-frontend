@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-add-expense-modal',
@@ -14,7 +16,8 @@ export class AddExpenseModalComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddExpenseModalComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+      @Inject(MAT_DIALOG_DATA) public data: any   
   ) {}
 
   ngOnInit() {
@@ -27,6 +30,11 @@ export class AddExpenseModalComponent {
       currency: ['INR', Validators.required],
       notes: ['']
     });
+    
+    //Edit mode
+    if(this.data){
+      this.form.patchValue(this.data);
+    }
   }
 
   get f() {
