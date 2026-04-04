@@ -6,6 +6,8 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { DashboardComponent } from './features/dashboard/dashboard/dashboard.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { BudgetGuard } from './core/guards/budget.guard';
+import { BudgetComponent } from './features/budget/budget.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -16,9 +18,14 @@ const routes: Routes = [
 
   // 🔐 Protected Route
   {
+    path : 'budget',
+    component : BudgetComponent,
+    canActivate: [AuthGuard , BudgetGuard] 
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [AuthGuard]   // ✅ Yaha lagana hai
+    canActivate: [AuthGuard]  
   },
 
   { path: '**', redirectTo: 'landing' }

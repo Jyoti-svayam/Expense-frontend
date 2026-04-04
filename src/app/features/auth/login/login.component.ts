@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { BudgetService } from 'src/app/core/services/budget.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private auth: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private budgetService : BudgetService
   ) {}
 
   ngOnInit(): void {
@@ -33,31 +35,52 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
-    this.submitted = true;
+ onSubmit() {
+  this.submitted = true;
 
-    console.log("Login Submitted ✅");
-
-    if (this.form.invalid) {
-      this.toastr.error('Please enter valid credentials');
-      return;
-    }
-
-    this.loading = true;
-
-    this.auth.login(this.form.value).subscribe({
-      next: (res: any) => {
-        this.toastr.success('Login successful 🎉');
-
-        // ✅ Save token
-        localStorage.setItem('token', res.token);
-
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.toastr.error(err.error?.message || 'Login failed');
-        this.loading = false;
-      }
-    });
+  if (this.form.invalid) {
+    this.toastr.error('Please enter valid credentials');
+    return;
   }
+
+  this.loading = true;
+
+  this.auth.login(this.form.value).subscribe({
+    next: (loginRes: any) => {
+      console.log(loginRes.accessToken);
+
+      // TOKEN SAVE (correct place)
+      if (loginRes?.accessToken) {
+        localStorage.setItem('token', loginRes.accessToken);
+      }
+
+      // 🔥 NOW CHECK BUDGET
+      this.budgetService.getCurrentBudget().subscribe({
+        next: (budgetRes: any) => {
+
+          if (budgetRes && budgetRes.amount_limit) {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/budget']);
+          }
+
+          this.toastr.success('Login successful 🎉');
+          this.loading = false;
+        },
+
+        error: () => {
+          // fallback → new user
+          this.router.navigate(['/budget']);
+          this.loading = false;
+        }
+      });
+
+    },
+
+    error: (err) => {
+      this.toastr.error(err.error?.message || 'Login failed');
+      this.loading = false;
+    }
+  });
+}
 }

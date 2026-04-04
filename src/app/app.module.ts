@@ -13,6 +13,15 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './features/dashboard/dashboard.module';
 import { LottieModule } from 'ngx-lottie';
 import * as player from 'lottie-web';
+import { BudgetComponent } from './features/budget/budget.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+
+
 
 export function playerFactory() : any {
   return player;
@@ -20,7 +29,8 @@ export function playerFactory() : any {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BudgetComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +43,19 @@ export function playerFactory() : any {
      LandingModule,
      AuthModule,
      SharedModule,
-     DashboardModule
+     DashboardModule,
+      MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : AuthInterceptor,
+      multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,30 @@
+.budget-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.budget-card {
+  width: 400px;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+  color: gray;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .budget-card {
+    width: 100%;
+  }
+}

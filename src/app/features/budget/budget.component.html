@@ -1,0 +1,47 @@
+<div class="budget-page">
+  <div>
+      <h3>Welcome, as you are new User. Please select your budget for start your tracking</h3>
+  </div>
+  <div>
+      <mat-card class="budget-card">
+
+    <h2>Set Monthly Budget 💰</h2>
+    <p class="subtitle">Manage your spending smartly</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Month -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Month</mat-label>
+        <input matInput formControlName="month"  />
+      </mat-form-field>
+
+      <!-- Amount -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Budget Amount</mat-label>
+        <input matInput type="number" formControlName="amount_limit" />
+
+        <mat-error *ngIf="submitted && f['amount_limit']?.errors?.['required']">
+          Amount is required
+        </mat-error>
+
+        <mat-error *ngIf="submitted && f['amount_limit']?.errors?.['min']">
+          Must be greater than 0
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <button mat-raised-button color="primary" class="full-width" type="submit">
+        <span *ngIf="loading">Saving...</span>
+        <span *ngIf="!loading">Save Budget</span>
+      </button>
+
+    </form>
+
+  </mat-card>
+
+  </div>
+
+
+
+</div>
