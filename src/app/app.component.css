@@ -1,0 +1,6 @@
+.main-content {
+  margin-top: 70px; /* same as navbar height */
+}
+html {
+  scroll-behavior: auto;
+}
