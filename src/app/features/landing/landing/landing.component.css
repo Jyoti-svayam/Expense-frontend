@@ -5,37 +5,37 @@ html, body {
   overflow: hidden;
 }
 
-/* Hero full screen */
+/* Hero section */
 .hero {
   display: flex;
-  align-items: center;       /* ✅ vertical center */
-  justify-content: center;   /* ✅ whole content center */
+  align-items: flex-start;   /* 🔥 TOP ALIGN (main fix) */
+  justify-content: center;
   height: 100vh;
-  padding: 0 6%;
+  padding: 6% 6% 0;
   box-sizing: border-box;
   background: #0f172a;
   color: white;
-  gap: 60px;                 /* ✅ space between text & animation */
+  gap: 60px;
 }
 
-/* Fix h-screen issue */
+/* Fix unwanted h-screen */
 .hero .h-screen {
   height: auto !important;
 }
 
-/* Text container */
+/* Left text */
 .hero-card {
   max-width: 600px;
 }
 
-/* Heading (BIG & clean) */
+/* Heading */
 .hero-card h1 {
   font-size: 3.5rem;
   margin-bottom: 15px;
   line-height: 1.2;
 }
 
-/* Text */
+/* Paragraph */
 .hero-card p {
   font-size: 1.2rem;
   margin-bottom: 25px;
@@ -53,19 +53,19 @@ html, body {
   cursor: pointer;
 }
 
-/* Animation container */
+/* Right image container */
 .hero > div:last-child {
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* 🔥 same top alignment */
   justify-content: center;
 }
 
-/* 🔥 Bigger animation */
+/* Lottie animation */
 ng-lottie {
-  width: 500px !important;
-  height: 500px !important;
+  width: 650px !important;
+  height: 650px !important;
+  margin-top: -110px;   /* 🔥 isko adjust karo */
 }
-
 /* Prevent overflow */
 .hero > * {
   max-height: 100%;
