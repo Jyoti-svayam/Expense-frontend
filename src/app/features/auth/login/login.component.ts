@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
 
   this.auth.login(this.form.value).subscribe({
     next: (loginRes: any) => {
-      console.log(loginRes.accessToken);
 
       // TOKEN SAVE (correct place)
       if (loginRes?.accessToken) {

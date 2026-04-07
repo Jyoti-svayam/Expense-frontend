@@ -18,4 +18,10 @@ export class AuthService {
   login(data: any) {
     return this.http.post(`${this.baseUrl}/login`, data);
   }
+
+logout() {
+  return this.http.delete(`${this.baseUrl}/logout`, {
+    withCredentials: true  
+  });
+}
 }

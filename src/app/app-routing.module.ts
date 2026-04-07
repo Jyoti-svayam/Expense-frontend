@@ -20,12 +20,12 @@ const routes: Routes = [
   {
     path : 'budget',
     component : BudgetComponent,
-    canActivate: [AuthGuard , BudgetGuard] 
+    canActivate: [AuthGuard ] 
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]  
+    canActivate: [AuthGuard ]  
   },
 
   { path: '**', redirectTo: 'landing' }

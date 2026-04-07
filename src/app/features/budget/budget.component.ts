@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BudgetService } from 'src/app/core/services/budget.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budget',
@@ -18,7 +19,8 @@ export class BudgetComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private budgetService: BudgetService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -60,14 +62,19 @@ export class BudgetComponent implements OnInit {
 
     this.loading = true;
 
-    const payload = {
-      amount_limit: this.form.get('amount_limit')?.value
-    };
+  const rawValue = this.form.getRawValue(); // IMPORTANT
 
+  const payload = {
+    month: rawValue.month,
+    amount_limit: Number(rawValue.amount_limit)
+  };
+
+  
     this.budgetService.setBudget(payload).subscribe({
       next: () => {
         this.toastr.success('Budget updated successfully 💰');
         this.loading = false;
+        this.router.navigate(['/dashboard'])
       },
       error: (err) => {
         this.toastr.error(err.error?.message || 'Something went wrong');

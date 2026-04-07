@@ -1,8 +1,6 @@
 <div class="modal-header">
 <h2>{{ data ? 'Edit Expense' : 'Add Expense' }}</h2>
-  <button mat-icon-button (click)="close()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <button class="close-btn" (click)="close()"> ✖ </button>
 </div>
 
 <form [formGroup]="form" (ngSubmit)="submit()">
