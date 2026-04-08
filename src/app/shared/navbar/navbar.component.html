@@ -3,13 +3,19 @@
     💰 ExpenseTracker
   </h2>
 
-   <a id="links"
+
+   <a id="links" routerLink="/">Home</a>
+   <div *ngIf="dashboardHidden()">
+     <a id="links" (click)="goToDashBoard()" routerLink="/dashboard">Dashboard</a>
+   </div>
+      <a id="links"
     *ngIf="showLogout()" 
     (click)="logout()">
     Logout
 </a>
 
-   <a  id="links" (click)="goToDashBoard()" routerLink="/dashboard">Dashboard</a>
+   
+   
  
    
 

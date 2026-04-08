@@ -16,9 +16,10 @@ html, body {
 .auth-page {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
 }
 
 /* Card */
@@ -31,6 +32,7 @@ html, body {
   backdrop-filter: blur(15px);
   color: black;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  margin: 40px;
 }
 
 /* Ensure all elements align same */

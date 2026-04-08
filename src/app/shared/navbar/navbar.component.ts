@@ -12,6 +12,8 @@ export class NavbarComponent {
 
   allowedRoutes = ['/dashboard', '/budget'];
 
+  dashboardRoute = '/';
+
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
@@ -24,12 +26,17 @@ goToDashBoard(){
     console.log("error");
   }
 }
+
+dashboardHidden = () => {
+  return this.router.url !== '/dashboard';
+}
+
 showLogout(): boolean {
   return this.isLoggedIn() && this.allowedRoutes.includes(this.router.url);
 }
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

@@ -3,6 +3,7 @@ import { Chart, registerables } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
 import { BudgetService } from 'src/app/core/services/budget.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 Chart.register(...registerables);
 
@@ -14,9 +15,10 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit, AfterViewInit {
   
   constructor(private dialog: MatDialog,
-    private budget : BudgetService
+    private budget : BudgetService,
+    private user :  AuthService,
   ) {}
-  userName = "Vishal";
+  userName = "";
 
   userBudget = 0;
 
@@ -64,7 +66,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ];
 
 
-
+  getUserdetails(){
+    this.user.getUserDetails().subscribe({
+      next : (userDetails : any)=>{
+          console.log(userDetails.user.name);
+          this.userName = userDetails.user.name;
+      }
+    })
+  }
 
 
   getCurrentBudget(){
@@ -156,6 +165,7 @@ openAddExpense() {
 }
 
  ngOnInit(): void {
+  this.getUserdetails();
   this.getCurrentBudget();
   this.getCurrentExpense();
   this.remaining();
