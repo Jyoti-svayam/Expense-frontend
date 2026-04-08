@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
@@ -30,7 +30,8 @@ import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.
     MatButtonModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   exports: [
     DashboardComponent

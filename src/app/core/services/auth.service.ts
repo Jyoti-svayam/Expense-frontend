@@ -24,4 +24,8 @@ logout() {
     withCredentials: true  
   });
 }
+
+getUserDetails(){
+    return this.http.get(`${this.baseUrl}/profile`);
+  }
 }
