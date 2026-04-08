@@ -8,6 +8,8 @@ export class BudgetService {
 
   private baseUrl = `${environment.apiUrl}/budget`;
 
+  private baseUrlExpense = `${environment.apiUrl}/expense`;
+
   constructor(private http: HttpClient) {}
 
   setBudget(data: any) {
@@ -20,5 +22,13 @@ export class BudgetService {
 
   updateCurrentBudget(data : any){
     return this.http.post(`${this.baseUrl}/`, data);
+  }
+
+  getTotalExpense(){
+  return this.http.get(`${this.baseUrlExpense}/`);
+  }
+
+  addExpense(data : any){
+    return this.http.post(`${this.baseUrlExpense}/` , data);
   }
 }

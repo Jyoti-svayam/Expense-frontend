@@ -1,7 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit  } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
+import { BudgetService } from 'src/app/core/services/budget.service';
 
 Chart.register(...registerables);
 
@@ -10,12 +11,18 @@ Chart.register(...registerables);
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog,
+    private budget : BudgetService
+  ) {}
   userName = "Vishal";
 
-  budget = 5000;
+  userBudget = 0;
+
+  userExpense = 0;
+
+  remains = 0;
 
   selectedNote: string | null = null;
   selectedDeleteIndex: number | null = null;
@@ -56,13 +63,38 @@ export class DashboardComponent implements AfterViewInit {
     }
   ];
 
-  get totalExpense() {
-    return this.categoryData.reduce((sum, c) => sum + c.value, 0);
+
+
+
+
+  getCurrentBudget(){
+    this.budget.getCurrentBudget().subscribe({
+      next : (currentBudget : any) => {
+        console.log(currentBudget.amount_limit);
+        this.userBudget = Number(currentBudget.amount_limit);
+      },
+      error : (err) =>{
+        console.log(err);
+      }
+    });
   }
 
-  get remaining() {
-    return this.budget - this.totalExpense;
+  getCurrentExpense(){
+    this.budget.getTotalExpense().subscribe({
+      next : (currentExpense : any) => {
+        console.log(currentExpense.total);
+       this.userExpense = Number(currentExpense.total);
+      }
+    })
   }
+
+  
+
+ remaining() {
+  this.remains = this.userBudget - this.userExpense;
+}
+
+
 
   // Notes
   openNotes(note: string) {
@@ -121,6 +153,12 @@ openAddExpense() {
       this.dataSource = [...this.dataSource, result];
     }
   });
+}
+
+ ngOnInit(): void {
+  this.getCurrentBudget();
+  this.getCurrentExpense();
+  this.remaining();
 }
 
   ngAfterViewInit(): void {
