@@ -1,6 +1,17 @@
 <nav class="navbar">
-  <h2 routerLink=''>
+  <h2 routerLink="">
     💰 ExpenseTracker
   </h2>
-  <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="primary">Logout</button>
+
+   <a id="links"
+    *ngIf="showLogout()" 
+    (click)="logout()">
+    Logout
+</a>
+
+   <a  id="links" (click)="goToDashBoard()" routerLink="/dashboard">Dashboard</a>
+ 
+   
+
+ 
 </nav>
