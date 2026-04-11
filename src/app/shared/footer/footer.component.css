@@ -1,6 +1,6 @@
 .app-footer {
   text-align: center;
-  padding: 15px 0;
+  padding: 10px 0;
   background-color: #000;
   color: #fff; 
   font-size: 14px;
@@ -8,5 +8,4 @@
 
 .app-footer p {
   margin: 5px 0;
-
 }
