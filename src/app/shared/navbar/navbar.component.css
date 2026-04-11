@@ -1,23 +1,75 @@
 .navbar {
   position: fixed;
-  background-color: #141e36;
-  color: white;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 70px;
+
+  background-color: #141e36;
+
   display: flex;
   align-items: center;
-  justify-content:space-around;
+  justify-content: space-between;
+
+  padding: 0 40px; 
+  box-sizing: border-box;
+
   z-index: 1000;
-  padding: 5px;
 }
 
-#links{
+/* LEFT */
+.navbar h2 {
   color: white;
-  font-size: larger;
-  stroke: none;
+  margin: 0;
+  font-size: 22px;
+  white-space: nowrap;
 }
 
+.logout{
+   color: rgb(241, 23, 23) !important;
+  text-decoration: none;
 
+  font-size: 18px;
+  font-weight: 500;
 
+  padding: 6px 12px;  
+  border-radius: 6px;
+
+  white-space: nowrap; 
+
+  transition: 0.3s;
+}
+
+.logout:hover{
+  background-color: rgba(255,255,255,0.15);
+  color: #ff3700 !important;
+}
+
+.right-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;  
+}
+
+/* LINKS */
+.links {
+  color: white !important;
+  text-decoration: none;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  padding: 6px 12px;  
+  border-radius: 6px;
+
+  white-space: nowrap; 
+
+  transition: 0.3s;
+}
+
+/* hover */
+.links:hover {
+  background-color: rgba(255,255,255,0.15);
+  color: #00e5ff !important;
+}

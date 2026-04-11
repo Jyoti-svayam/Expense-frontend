@@ -1,23 +1,23 @@
 <nav class="navbar">
+
   <h2 routerLink="">
     💰 ExpenseTracker
   </h2>
 
+  <div class="right-links">
 
-   <a id="links" routerLink="/">Home</a>
-   <div *ngIf="dashboardHidden()">
-     <a id="links" (click)="goToDashBoard()" routerLink="/dashboard">Dashboard</a>
-   </div>
-      <a id="links"
-    *ngIf="showLogout()" 
-    (click)="logout()">
-    Logout
-</a>
+    <a class="links" routerLink="/">Home</a>
 
-   
-   
- 
-   
+    <div *ngIf="dashboardHidden()">
+      <a class="links" (click)="goToDashBoard()" routerLink="/dashboard">
+        Dashboard
+      </a>
+    </div>
 
- 
+    <a class="logout" *ngIf="showLogout()" (click)="logout()">
+      Logout
+    </a>
+
+  </div>
+
 </nav>
