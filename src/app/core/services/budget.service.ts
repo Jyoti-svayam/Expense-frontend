@@ -17,7 +17,7 @@ export class BudgetService {
   }
 
   getCurrentBudget() {
-    return this.http.get(`${this.baseUrl}/`);
+    return this.http.get(`${this.baseUrl}/month`);
   }
 
   updateCurrentBudget(data : any){
@@ -30,5 +30,13 @@ export class BudgetService {
 
   addExpense(data : any){
     return this.http.post(`${this.baseUrlExpense}/` , data);
+  }
+
+  getAllExpense(){
+    return this.http.get(`${this.baseUrlExpense}/`)
+  }
+
+  getAllCategories(){
+    return this.http.get(`${environment.apiUrl}/categories`);
   }
 }

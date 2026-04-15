@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
 import { BudgetService } from 'src/app/core/services/budget.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { SocketService } from 'src/app/core/services/socket.service';
 
 Chart.register(...registerables);
 
@@ -17,14 +18,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private dialog: MatDialog,
     private budget : BudgetService,
     private user :  AuthService,
+    private socketService : SocketService
   ) {}
   userName = "";
 
   userBudget = 0;
 
+  usedPercent = 0;
+
   userExpense = 0;
 
   remains = 0;
+
+  warning = '';
 
   selectedNote: string | null = null;
   selectedDeleteIndex: number | null = null;
@@ -45,6 +51,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     'update',
     'delete'
   ];
+
+  tableDataSource : any[] = [];
+    categories: any[] = [];
 
   dataSource = [
     {
@@ -163,12 +172,52 @@ openAddExpense() {
     }
   });
 }
+socketUpdate() {
+  const userId = JSON.parse(localStorage.getItem('userId')!);
+  console.log("userId:", userId);
+
+  this.socketService.connect(userId);
+
+  this.socketService.onExpenseUpdate().subscribe((data: any) => {
+    console.log("Expense Update:", data);
+     this.remains = data.remaining;
+    this.usedPercent = data.usedPercent;
+    this.warning = data.warning;
+  });
+}
+
+getTableData() {
+  this.budget.getAllExpense().subscribe({
+    next: (res : any) => {
+      console.log("Data:", res);
+      this.tableDataSource = res.data;
+    },
+    error: (err) => {
+      console.error("❌ Error:", err);
+    }
+  });
+}
+
+  loadCategories() {
+    this.budget.getAllCategories().subscribe({
+      next: (res :any) => {
+        console.log("cate" ,res);
+        this.categories = res;
+      },
+      error: (err) => {
+        console.error("Error fetching categories", err);
+      }
+    });
+  }
 
  ngOnInit(): void {
+  this.socketUpdate();
+  this.getTableData();
   this.getUserdetails();
   this.getCurrentBudget();
   this.getCurrentExpense();
   this.remaining();
+  this.loadCategories();
 }
 
   ngAfterViewInit(): void {

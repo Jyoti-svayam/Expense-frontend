@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { BudgetService } from 'src/app/core/services/budget.service';
 
 @Component({
   selector: 'app-add-expense-modal',
@@ -16,6 +17,7 @@ export class AddExpenseModalComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddExpenseModalComponent>,
+    private budget : BudgetService,
     private fb: FormBuilder,
       @Inject(MAT_DIALOG_DATA) public data: any   
   ) {}
@@ -46,10 +48,25 @@ export class AddExpenseModalComponent {
   }
 
   submit() {
-    this.submitted = true;
+  this.submitted = true;
 
-    if (this.form.invalid) return;
+  if (this.form.invalid) return;
 
-    this.dialogRef.close(this.form.value);
-  }
+  const payload = {
+    ...this.form.value,
+    expense_date: this.form.value.date,
+    payment_method: this.form.value.payment
+  };
+
+  this.budget.addExpense(payload).subscribe({
+    next: (data) => {
+      console.log("✅ Expense added:", data);
+    },
+    error: (err) => {
+      console.log("❌ failed post api", err);
+    }
+  });
+
+  this.dialogRef.close(payload);
+}
 }

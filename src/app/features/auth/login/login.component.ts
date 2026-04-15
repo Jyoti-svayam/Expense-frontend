@@ -52,6 +52,10 @@ export class LoginComponent implements OnInit {
       if (loginRes?.accessToken) {
         localStorage.setItem('token', loginRes.accessToken);
       }
+       if (loginRes?.userdetails.id) {
+        localStorage.setItem('userId', JSON.stringify(loginRes.userdetails.id));
+        console.log(localStorage.getItem("userId"));
+      }
 
       // 🔥 NOW CHECK BUDGET
       this.budgetService.getCurrentBudget().subscribe({

@@ -71,7 +71,8 @@ export class BudgetComponent implements OnInit {
 
   
     this.budgetService.setBudget(payload).subscribe({
-      next: () => {
+      next: (data : any) => {
+        console.log(data.amount_limit);
         this.toastr.success('Budget updated successfully 💰');
         this.loading = false;
         this.router.navigate(['/dashboard'])
