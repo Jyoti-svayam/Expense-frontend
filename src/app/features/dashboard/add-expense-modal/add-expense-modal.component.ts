@@ -15,6 +15,8 @@ export class AddExpenseModalComponent {
   form!: FormGroup;
   submitted = false;
 
+  categories: any[] = [];
+
   constructor(
     private dialogRef: MatDialogRef<AddExpenseModalComponent>,
     private budget : BudgetService,
@@ -22,7 +24,19 @@ export class AddExpenseModalComponent {
       @Inject(MAT_DIALOG_DATA) public data: any   
   ) {}
 
+ getCategories() {
+  this.budget.getAllCategories().subscribe({
+    next: (res: any) => {
+      this.categories = res; 
+    },
+    error: (err) => {
+      console.error(err);
+    }
+  });
+}
+
   ngOnInit() {
+    this.getCategories()
     this.form = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       amount: ['', Validators.required],

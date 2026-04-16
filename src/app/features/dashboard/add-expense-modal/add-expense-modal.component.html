@@ -33,7 +33,7 @@
   </mat-form-field>
 
   <!-- CATEGORY -->
-  <mat-form-field appearance="outline" class="full">
+  <!-- <mat-form-field appearance="outline" class="full">
     <mat-label>Category</mat-label>
     <mat-select formControlName="category">
       <mat-option value="Food">Food</mat-option>
@@ -42,7 +42,23 @@
       <mat-option value="Bills">Bills</mat-option>
       <mat-option value="Entertainment">Entertainment</mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
+
+  <mat-form-field appearance="outline" class="full">
+  <mat-label>Category</mat-label>
+
+  <mat-select formControlName="category">
+
+    <mat-option 
+      *ngFor="let cat of categories" 
+      [value]="cat.name">  <!-- 👈 same as your old structure -->
+
+      {{ cat.name }}
+
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
 
   <!-- PAYMENT -->
   <mat-form-field appearance="outline" class="full">

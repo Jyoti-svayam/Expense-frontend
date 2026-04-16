@@ -25,7 +25,7 @@ export class BudgetService {
   }
 
   getTotalExpense(){
-  return this.http.get(`${this.baseUrlExpense}/`);
+  return this.http.get(`${this.baseUrlExpense}/total`);
   }
 
   addExpense(data : any){
@@ -38,5 +38,8 @@ export class BudgetService {
 
   getAllCategories(){
     return this.http.get(`${environment.apiUrl}/categories`);
+  }
+  deleteExpense(id : any){
+    return this.http.delete(`${this.baseUrlExpense}/${id}`);
   }
 }
