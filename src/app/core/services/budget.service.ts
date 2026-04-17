@@ -32,8 +32,8 @@ export class BudgetService {
     return this.http.post(`${this.baseUrlExpense}/` , data);
   }
 
-  getAllExpense(){
-    return this.http.get(`${this.baseUrlExpense}/`)
+  getAllExpense(sort?: any){
+    return this.http.get(`${this.baseUrlExpense}?sort=${sort}`)
   }
 
   getAllCategories(){
@@ -41,5 +41,9 @@ export class BudgetService {
   }
   deleteExpense(id : any){
     return this.http.delete(`${this.baseUrlExpense}/${id}`);
+  }
+
+  sortExpense(sort:  any){
+    return this.http.get(`${this.baseUrlExpense}?${sort}`)
   }
 }

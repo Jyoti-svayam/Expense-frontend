@@ -58,9 +58,50 @@
 
 </div>
 
-  <button mat-raised-button color="primary" (click)="openAddExpense()">
+<div id="beforeMain">
+       <button mat-raised-button color="primary" (click)="openAddExpense()">
   ➕ Add Expense
  </button>
+ 
+
+ <div class="sort-wrapper">
+
+  <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-btn">
+    <mat-icon>tune</mat-icon>
+    {{ getSortLabel() }}
+    <mat-icon class="arrow">expand_more</mat-icon>
+  </button>
+
+  <mat-menu #sortMenu="matMenu" class="sort-menu">
+
+    <button mat-menu-item (click)="applySort('latest')">
+      <mat-icon>schedule</mat-icon>
+      <span>Latest First</span>
+      <mat-icon *ngIf="selectedSort === 'latest'" class="check">check</mat-icon>
+    </button>
+
+    <button mat-menu-item (click)="applySort('high')">
+      <mat-icon>trending_down</mat-icon>
+      <span>Amount: High to Low</span>
+      <mat-icon *ngIf="selectedSort === 'high'" class="check">check</mat-icon>
+    </button>
+
+    <button mat-menu-item (click)="applySort('low')">
+      <mat-icon>trending_up</mat-icon>
+      <span>Amount: Low to High</span>
+      <mat-icon *ngIf="selectedSort === 'low'" class="check">check</mat-icon>
+    </button>
+
+  </mat-menu>
+
+</div>
+
+<button>Ai-Summary</button>
+
+
+</div>
+
+
   <!-- MAIN -->
   <div class="main-section">
 

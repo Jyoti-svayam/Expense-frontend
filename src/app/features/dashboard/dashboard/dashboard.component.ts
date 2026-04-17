@@ -318,6 +318,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   tableDataSource: any[] = [];
   categories: any[] = [];
+  selectedSort: string = 'latest';
+
+
+  
 
   // ================= USER =================
   getUserdetails() {
@@ -353,14 +357,37 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   // ================= TABLE =================
-  getTableData() {
-    this.budget.getAllExpense().subscribe({
-      next: (res: any) => {
-        this.tableDataSource = res.data;
-      },
-      error: (err) => console.error(err)
-    });
+getTableData() {
+  let sort : any = "";
+
+  if (this.selectedSort === 'latest') {
+    sort = "latest";
+  } else if (this.selectedSort === 'high') {
+    sort = "high";
+  } else if (this.selectedSort === 'low') {
+    sort = "low";
   }
+
+  this.budget.getAllExpense(sort).subscribe({
+    next: (res: any) => {
+      this.tableDataSource = res.data;
+    },
+    error: (err) => console.error(err)
+  });
+}
+applySort(type: string) {
+  this.selectedSort = type;
+  this.getTableData(); // reload data with new sort
+}
+
+getSortLabel(): string {
+  const map: any = {
+    latest: 'Latest',
+    high: 'High → Low',
+    low: 'Low → High'
+  };
+  return map[this.selectedSort];
+}
 
   // ================= ADD =================
   openAddExpense() {
@@ -464,7 +491,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   // ================= INIT =================
   ngOnInit(): void {
-    this.getTableData();
+    this.applySort(this.selectedSort);
     this.getUserdetails();
     this.getCurrentBudget();
     this.getCurrentExpense();

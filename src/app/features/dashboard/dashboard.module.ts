@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatMenuModule
   ],
   exports: [
     DashboardComponent

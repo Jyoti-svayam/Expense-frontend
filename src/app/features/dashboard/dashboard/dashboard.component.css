@@ -150,6 +150,11 @@
   color:#111
 }
 
+#beforeMain{
+  display: flex;
+  padding: 10px;
+}
+
 /* TABLE WRAPPER FIX  */
 .table-card {
   overflow-x: auto;   /* mobile scroll fix */

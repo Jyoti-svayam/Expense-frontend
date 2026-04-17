@@ -47,7 +47,7 @@ export function playerFactory() : any {
       MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [
     {
