@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 export function playerFactory() : any {
@@ -48,6 +48,7 @@ export function playerFactory() : any {
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+     MatPaginatorModule
   ],
   providers: [
     {

@@ -270,13 +270,15 @@
 
 
 
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
 import { BudgetService } from 'src/app/core/services/budget.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SocketService } from 'src/app/core/services/socket.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 Chart.register(...registerables);
 
@@ -316,11 +318,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     'delete'
   ];
 
-  tableDataSource: any[] = [];
-  categories: any[] = [];
-  selectedSort: string = 'latest';
-
-
+  // tableDataSource: any[] = [];
+   categories: any[] = [];
+   selectedSort: string = 'latest';
+tableDataSource = new MatTableDataSource<any>([]);
+@ViewChild(MatPaginator) paginator!: MatPaginator;
   
 
   // ================= USER =================
@@ -369,9 +371,16 @@ getTableData() {
   }
 
   this.budget.getAllExpense(sort).subscribe({
-    next: (res: any) => {
-      this.tableDataSource = res.data;
+    // next: (res: any) => {
+    //   this.tableDataSource = res.data;
+    // },
+
+next: (res: any) => {
+      this.tableDataSource = new MatTableDataSource(res.data);
+      this.tableDataSource.paginator = this.paginator;
     },
+
+
     error: (err) => console.error(err)
   });
 }
@@ -399,14 +408,22 @@ getSortLabel(): string {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // ✅ TOP insert
-        this.tableDataSource = [result, ...this.tableDataSource];
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     // ✅ TOP insert
+    //     this.tableDataSource = [result, ...this.tableDataSource];
 
-        // ✅ update totals
-        this.getCurrentExpense();
-      }
+    //     // ✅ update totals
+    //     this.getCurrentExpense();
+    //   }
+
+dialogRef.afterClosed().subscribe(result => {
+  if (result) {
+    this.tableDataSource.data = [result, ...this.tableDataSource.data];
+    this.tableDataSource.paginator = this.paginator;
+    this.getCurrentExpense();
+  }
+
     });
   }
 
@@ -420,41 +437,72 @@ getSortLabel(): string {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.tableDataSource[index] = result;
-        this.tableDataSource = [...this.tableDataSource];
-      }
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.tableDataSource[index] = result;
+    //     this.tableDataSource = [...this.tableDataSource];
+    //   }
+
+dialogRef.afterClosed().subscribe(result => {
+  if (result) {
+    const updated = [...this.tableDataSource.data];
+    updated[index] = result;
+    this.tableDataSource.data = updated;
+  }
+
     });
   }
 
   // ================= DELETE =================
-  openDeleteDialog(expense: any, index: number) {
-    this.selectedDeleteIndex = index;
-    this.selectedExpenseId = expense.id;
-  }
+  // openDeleteDialog(expense: any, index: number) {
+  //   this.selectedDeleteIndex = index;
+  //   this.selectedExpenseId = expense.id;
+  // }
+
+  openDeleteDialog(expense: any) {
+  this.selectedDeleteIndex = this.tableDataSource.data.indexOf(expense);
+  this.selectedExpenseId = expense.id;
+}
 
   closeDeleteDialog() {
     this.selectedDeleteIndex = null;
     this.selectedExpenseId = null;
   }
 
-  deleteExpense() {
-    if (!this.selectedExpenseId) return;
+    // deleteExpense() {
+    // if (!this.selectedExpenseId) return;
 
-    this.budget.deleteExpense(this.selectedExpenseId).subscribe({
-      next: () => {
-        if (this.selectedDeleteIndex !== null) {
-          this.tableDataSource.splice(this.selectedDeleteIndex, 1);
-          this.tableDataSource = [...this.tableDataSource];
-        }
+     //  this.budget.deleteExpense(this.selectedExpenseId).subscribe({
+  //     next: () => {
+  //       if (this.selectedDeleteIndex !== null) {
+  //         this.tableDataSource.splice(this.selectedDeleteIndex, 1);
+  //         this.tableDataSource = [...this.tableDataSource];
+  //       }
 
-        // ✅ update totals
-        this.getCurrentExpense();
+       deleteExpense() {
+  if (!this.selectedExpenseId) return;
 
-        this.closeDeleteDialog();
-      },
-      error: (err) => console.error(err)
+  this.budget.deleteExpense(this.selectedExpenseId).subscribe({
+    next: () => {
+      if (this.selectedDeleteIndex !== null) {
+        const updated = [...this.tableDataSource.data];
+        updated.splice(this.selectedDeleteIndex, 1);
+        this.tableDataSource.data = updated;
+        this.tableDataSource.paginator = this.paginator;
+      }
+
+      this.getCurrentExpense();
+      this.closeDeleteDialog();
+    },
+    error: (err) => console.error(err)
+  
+
+   //   // ✅ update totals
+      //   this.getCurrentExpense();
+
+      //   this.closeDeleteDialog();
+      // },
+      // error: (err) => console.error(err)
     });
   }
 

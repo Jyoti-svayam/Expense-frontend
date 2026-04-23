@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,8 @@ import { MatMenuModule } from '@angular/material/menu';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule
   ],
   exports: [
     DashboardComponent
