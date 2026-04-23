@@ -15,7 +15,8 @@
       </div>
       <div class="text">
         <h3>Budget</h3>
-        <p>{{ tableDataSource.length }} Transactions</p>
+       <!---- <p>{{ tableDataSource.Data.length }} Transactions</p> -->
+       <p>{{ tableDataSource.data.length }} Transactions</p>
       </div>
     </div>
 
@@ -160,7 +161,8 @@
         <ng-container matColumnDef="update">
           <th mat-header-cell *matHeaderCellDef>Update</th>
          <td mat-cell *matCellDef="let e">
-  <button mat-button color="green" (click)="openEditExpense(e, tableDataSource.indexOf(e))">
+    <!---- <button mat-button color="green" (click)="openEditExpense(e, tableDataSource.indexOf(e))"> --->
+         <button mat-button color="green" (click)="openEditExpense(e, tableDataSource.data.indexOf(e))">      
     Edit ✏️
   </button>
 </td>
@@ -170,7 +172,7 @@
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef>Delete</th>
           <td mat-cell *matCellDef="let e; let i = index">
-            <button mat-icon-button color="warn" (click)="openDeleteDialog(e, i)">
+            <button mat-icon-button color="warn" (click)="openDeleteDialog(e)">
              Delete 🗑️
             </button>
           </td>
@@ -180,6 +182,12 @@
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"></tr>
 
       </table>
+   <mat-paginator 
+  [pageSizeOptions]="[5, 10, 20]" 
+  pageSize="5"
+  showFirstLastButtons>
+</mat-paginator>
+
 
     </mat-card>
 
