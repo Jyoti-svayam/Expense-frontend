@@ -280,7 +280,6 @@ import { SocketService } from 'src/app/core/services/socket.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AiSummaryModalComponent } from '../ai-summary-modal/ai-summary-modal.component';
-import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 Chart.register(...registerables);
 
@@ -306,6 +305,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   userExpense = 0;
   remainsBudget = 0;
   warning = '';
+  isDarkTheme = false;
 
   selectedDeleteIndex: number | null = null;
   selectedExpenseId: number | null = null;
@@ -327,6 +327,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    selectedSort: string = 'latest';
 tableDataSource = new MatTableDataSource<any>([]);
 @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  initializeTheme() {
+    const savedTheme = localStorage.getItem('dashboardTheme');
+    this.isDarkTheme = savedTheme === 'dark';
+    this.applyThemeClass();
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    localStorage.setItem('dashboardTheme', this.isDarkTheme ? 'dark' : 'light');
+    this.applyThemeClass();
+  }
+
+  applyThemeClass() {
+    if (typeof document === 'undefined') return;
+    document.body.classList.toggle('dark-theme', this.isDarkTheme);
+  }
   
 
   // ================= USER =================
@@ -398,10 +415,18 @@ getTableData(page: number = 1) {
   else if (this.selectedSort === 'high') sort = "high";
   else if (this.selectedSort === 'low') sort = "low";
 
-  this.budget.getAllExpense(sort, page, 5).subscribe({
+  this.budget.getAllExpense(sort, page,).subscribe({
     next: (res: any) => {
       this.tableDataSource = new MatTableDataSource(res.data);
       this.totalRecords = res.total;
+      this.tableDataSource.paginator = this.paginator;
+     setTimeout(() => {
+        if (this.paginator) {
+          this.paginator.length = res.total;
+          this.paginator.pageIndex = page - 1;
+          this.paginator.pageSize = 5;
+        }
+      }, 300);  // ← 300 karo
     },
     error: (err) => console.error(err)
   });
@@ -412,10 +437,11 @@ getTableData(page: number = 1) {
 // }
 
 onPageChange(event: any) {
+  console.log("pageIndex:", event.pageIndex);
+  console.log("page:", event.pageIndex + 1);
   const page = event.pageIndex + 1;
   this.router.navigate(['/dashboard/page', page]);
 }
-
 applySort(type: string) {
   this.selectedSort = type;
   this.getTableData(); // reload data with new sort
@@ -451,20 +477,25 @@ getSortLabel(): string {
 
 dialogRef.afterClosed().subscribe(result => {
   if (result) {
-    this.tableDataSource.data = [result, ...this.tableDataSource.data];
-    this.tableDataSource.paginator = this.paginator;
+    // this.tableDataSource.data = [result, ...this.tableDataSource.data];
+    // this.tableDataSource.paginator = this.paginator;
+    // this.getCurrentExpense();
+
+     const currentPage = Number(this.route.snapshot.params['page']) || 1;
+    this.getTableData(currentPage);
     this.getCurrentExpense();
+    this.router.navigate(['/dashboard/page', currentPage]);
   }
 
     });
   }
 
   // ================= EDIT =================
-  openEditExpense(element: any, index: number) {
+  openEditExpense(element: any) {
     const dialogRef = this.dialog.open(AddExpenseModalComponent, {
       width: '40vw',
       height: '70vh',
-      data: { ...element, index },
+      data: { ...element },
       panelClass: 'custom-dialog',
       disableClose: true
     });
@@ -476,12 +507,12 @@ dialogRef.afterClosed().subscribe(result => {
     //   }
 
 dialogRef.afterClosed().subscribe(result => {
-  if (result) {
-    const updated = [...this.tableDataSource.data];
-    updated[index] = result;
-    this.tableDataSource.data = updated;
-  }
-
+      if (result) {
+        const currentPage = Number(this.route.snapshot.params['page']) || 1;
+        this.getTableData(currentPage);
+        this.getCurrentExpense();
+        this.router.navigate(['/dashboard/page', currentPage]);
+      }
     });
   }
 
@@ -511,23 +542,35 @@ dialogRef.afterClosed().subscribe(result => {
   //         this.tableDataSource = [...this.tableDataSource];
   //       }
 
-       deleteExpense() {
+  //      deleteExpense() {
+  // if (!this.selectedExpenseId) return;
+
+  // this.budget.deleteExpense(this.selectedExpenseId).subscribe({
+  //   next: () => {
+  //     if (this.selectedDeleteIndex !== null) {
+  //       const updated = [...this.tableDataSource.data];
+  //       updated.splice(this.selectedDeleteIndex, 1);
+  //       this.tableDataSource.data = updated;
+  //       this.tableDataSource.paginator = this.paginator;
+  //     }
+
+  //     this.getCurrentExpense();
+  //     this.closeDeleteDialog();
+  //   },
+  //   error: (err) => console.error(err)
+  
+deleteExpense() {
   if (!this.selectedExpenseId) return;
 
   this.budget.deleteExpense(this.selectedExpenseId).subscribe({
     next: () => {
-      if (this.selectedDeleteIndex !== null) {
-        const updated = [...this.tableDataSource.data];
-        updated.splice(this.selectedDeleteIndex, 1);
-        this.tableDataSource.data = updated;
-        this.tableDataSource.paginator = this.paginator;
-      }
-
+      const currentPage = Number(this.route.snapshot.params['page']) || 1;
+      this.getTableData(currentPage);
       this.getCurrentExpense();
       this.closeDeleteDialog();
     },
     error: (err) => console.error(err)
-  
+
 
    //   // ✅ update totals
       //   this.getCurrentExpense();
@@ -571,10 +614,18 @@ dialogRef.afterClosed().subscribe(result => {
 
   // ================= INIT =================
   ngOnInit(): void {
+    this.initializeTheme();
      this.route.params.subscribe(params => {
     const page = Number(params['page']) || 1;
      this.selectedSort = 'latest';
     this.getTableData(page);
+
+      // Paginator sync
+    setTimeout(() => {
+      if (this.paginator) {
+        this.paginator.pageIndex = page - 1;
+      }
+    }, 0);
   });
     //this.applySort(this.selectedSort);
     this.getUserdetails();

@@ -1,63 +1,84 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Satisfy&family=Space+Grotesk:wght@300..700&display=swap');
-.google-sans-<uniquifier> {
-  font-family: "Google Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "GRAD" 0;
-}
-body{
-     margin: 0;
-    height: 100%;
-  background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
-   font-family: "Google Sans", sans-serif;
-}
-html {
-   height: 100%;
-   }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-.container {
-  padding: 15px;
+:root {
+  --bg: #f6f8fc;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-soft: #f4f7ff;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --border: #e5e7eb;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.06);
 }
 
-html, body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
   height: 100%;
   margin: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body.dark-theme {
+  --bg: #0b1220;
+  --surface: #111a2e;
+  --surface-muted: #0f172a;
+  --surface-soft: #1a2740;
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --primary: #3b82f6;
+  --primary-strong: #2563eb;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --border: #22314f;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(180deg, #08101e 0%, #0d172b 100%);
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin: 0 auto;
 }
 
 .app-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;   /* full screen */
 }
 
 .content {
-  flex: 1;  /* 🔥 pushes footer down */
-  padding-top: 70px; /* navbar space */
+  flex: 1;
+  padding-top: 72px;
 }
 
 button {
   cursor: pointer;
+  font-family: inherit;
 }
 
-@media (min-width: 768px) {
-  .container {
-    padding: 30px;
-  }
-}
 .custom-dialog .mat-mdc-dialog-container {
-  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .cdk-overlay-backdrop {
-  backdrop-filter: blur(6px);
-  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  background: rgba(2, 6, 23, 0.35);
 }

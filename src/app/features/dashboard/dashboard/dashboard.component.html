@@ -2,7 +2,13 @@
 
   <!-- GREETING -->
   <div class="greet">
-    <h2 id="name">Hi , <span style="color: rgb(56, 233, 56);" >{{userName}}</span> 👋</h2>
+    <div class="title-wrap">
+      <h2 id="name">Good day, <span>{{userName}}</span></h2>
+      <p class="subtitle">Track spending, stay within budget, and make smarter decisions.</p>
+    </div>
+    <div class="summary-pill">
+      Remaining: <strong>₹{{ remainsBudget | number:'1.0-0' }}</strong>
+    </div>
   </div>
 
   <!-- CARDS -->
@@ -14,14 +20,13 @@
         <mat-icon>account_balance_wallet</mat-icon>
       </div>
       <div class="text">
-        <h3>Budget</h3>
-       <!---- <p>{{ tableDataSource.Data.length }} Transactions</p> -->
-       <p>{{ tableDataSource.data.length }} Transactions</p>
+        <h3>Monthly Budget</h3>
+        <p>{{ tableDataSource.data.length }} transactions</p>
       </div>
     </div>
 
     <div class="card-right">
-      ₹{{ userBudget }}
+      ₹{{ userBudget | number:'1.0-0' }}
     </div>
   </mat-card>
 
@@ -31,13 +36,13 @@
         <mat-icon>trending_down</mat-icon>
       </div>
       <div class="text">
-        <h3>Expense</h3>
-        <p>Total spent</p>
+        <h3>Total Expense</h3>
+        <p>Spent this month</p>
       </div>
     </div>
 
     <div class="card-right">
-      ₹{{ userExpense }}
+      ₹{{ userExpense | number:'1.0-0' }}
     </div>
   </mat-card>
 
@@ -47,27 +52,34 @@
         <mat-icon>savings</mat-icon>
       </div>
       <div class="text">
-        <h3>Remaining</h3>
-        <p>Available balance</p>
+        <h3>Available</h3>
+        <p>Balance left</p>
       </div>
     </div>
 
     <div class="card-right">
-      ₹{{remainsBudget}}
+      ₹{{ remainsBudget | number:'1.0-0' }}
     </div>
   </mat-card>
 
 </div>
 
 <div id="beforeMain">
-       <button mat-raised-button color="primary" (click)="openAddExpense()">
-  ➕ Add Expense
- </button>
+  <div class="left-actions">
+    <button mat-raised-button color="primary" class="action-btn add-btn" (click)="openAddExpense()">
+      <mat-icon>add</mat-icon>
+      Add Expense
+    </button>
+  </div>
  
-
+ <div class="right-actions">
+ <button mat-stroked-button class="theme-toggle action-btn" (click)="toggleTheme()">
+   <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+   {{ isDarkTheme ? 'Light' : 'Dark' }}
+ </button>
  <div class="sort-wrapper">
 
-  <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-btn">
+  <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-btn action-btn">
     <mat-icon>tune</mat-icon>
     {{ getSortLabel() }}
     <mat-icon class="arrow">expand_more</mat-icon>
@@ -98,10 +110,11 @@
 </div>
 
 <!----AI Summary Button--->
-<button class="ai-btn-solid" (click)="openAiSummary()">
-  <span class="icon">✨</span>
+<button class="ai-btn-solid action-btn" (click)="openAiSummary()">
+  <mat-icon>auto_awesome</mat-icon>
   AI Summary
 </button>
+ </div>
 </div>
 
 
@@ -111,7 +124,9 @@
     <!-- TABLE -->
     <mat-card class="table-card">
 
-      <h3>Recent Expenses</h3>
+      <div class="section-head">
+        <h3>Recent Expenses</h3>
+      </div>
 
       <table mat-table [dataSource]="tableDataSource" class="modern-table">
 
@@ -151,7 +166,7 @@
         <ng-container matColumnDef="notes">
           <th mat-header-cell *matHeaderCellDef>Notes</th>
           <td mat-cell *matCellDef="let e">
-            <button mat-button color="primary" (click)="openNotes(e.notes)">
+            <button mat-button class="cell-link" (click)="openNotes(e.notes)">
               View
             </button>
           </td>
@@ -161,9 +176,8 @@
         <ng-container matColumnDef="update">
           <th mat-header-cell *matHeaderCellDef>Update</th>
          <td mat-cell *matCellDef="let e">
-    <!---- <button mat-button color="green" (click)="openEditExpense(e, tableDataSource.indexOf(e))"> --->
-         <button mat-button color="green" (click)="openEditExpense(e, tableDataSource.data.indexOf(e))">      
-    Edit ✏️
+         <button mat-button class="cell-link edit-link" (click)="openEditExpense(e)">
+    Edit
   </button>
 </td>
         </ng-container>
@@ -172,8 +186,8 @@
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef>Delete</th>
           <td mat-cell *matCellDef="let e; let i = index">
-            <button mat-icon-button color="warn" (click)="openDeleteDialog(e)">
-             Delete 🗑️
+            <button mat-button class="cell-link delete-link" (click)="openDeleteDialog(e)">
+             Delete
             </button>
           </td>
         </ng-container>
@@ -204,7 +218,7 @@
 
     <!-- CHART -->
     <div class="right">
-      <mat-card>
+      <mat-card class="chart-card">
         <h3>Expense Analysis</h3>
         <div class="chart-container">
           <canvas id="expenseChart"></canvas>
@@ -238,9 +252,9 @@
 
     <button class="close-btn" (click)="closeDeleteDialog()">✖</button>
 
-    <h3>Delete Expensecd </h3>
+    <h3>Delete Expense</h3>
 
-    <p>Are you Sure?</p>
+    <p>Are you sure you want to delete this expense?</p>
 
     <div class="actions">
       <button mat-stroked-button (click)="closeDeleteDialog()">Cancel</button>
