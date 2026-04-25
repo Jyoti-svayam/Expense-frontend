@@ -154,15 +154,6 @@
   gap: 6px;
 }
 
-.theme-toggle {
-  border-color: var(--border);
-  color: var(--text);
-  background: var(--surface);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .sort-wrapper {
   display: flex;
   align-items: center;
@@ -203,11 +194,19 @@
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   background: var(--surface);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 14px 16px 8px;
+}
+
+.table-card mat-paginator {
+  margin-top: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
 }
 
 .section-head {
-  padding: 2px 2px 10px;
+  padding: 4px 4px 12px;
 }
 
 .section-head h3 {
@@ -218,44 +217,126 @@
 
 .modern-table {
   width: 100%;
-  min-width: 780px;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-th {
+.modern-table th.mat-header-cell {
   background: var(--surface-soft);
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 10px;
+  vertical-align: middle;
 }
 
-td,
-th {
-  padding: 10px 8px;
+.modern-table td.mat-cell {
   border-bottom: 1px solid var(--border);
+  padding: 11px 10px;
+  color: var(--text);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.modern-table tr.mat-row:hover {
+  background: color-mix(in srgb, var(--surface-soft) 55%, transparent);
+}
+
+/* Text columns — left aligned (header + body match) */
+.modern-table .mat-column-title,
+.modern-table .mat-column-category,
+.modern-table .mat-column-date,
+.modern-table .mat-column-payment {
+  text-align: left;
+}
+
+.modern-table th.mat-header-cell.mat-column-title,
+.modern-table th.mat-header-cell.mat-column-category,
+.modern-table th.mat-header-cell.mat-column-date,
+.modern-table th.mat-header-cell.mat-column-payment {
+  text-align: left;
+}
+
+.modern-table .mat-column-title {
+  min-width: 140px;
+  max-width: 220px;
+  padding-left: 4px;
+}
+
+.modern-table td.mat-cell.mat-column-title {
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* Amount — right aligned (standard for currency) */
+.modern-table .mat-column-amount {
+  text-align: right;
+  width: 108px;
+  min-width: 96px;
+  font-variant-numeric: tabular-nums;
+  padding-right: 8px;
+}
+
+.modern-table th.mat-header-cell.mat-column-amount {
+  text-align: right;
+  padding-right: 8px;
+}
+
+.modern-table .mat-column-category {
+  width: 124px;
+}
+
+.modern-table .mat-column-date {
+  width: 112px;
+  white-space: nowrap;
+}
+
+.modern-table .mat-column-payment {
+  width: 96px;
+  text-transform: capitalize;
+}
+
+/* Action columns — centered, compact */
+.modern-table .mat-column-notes,
+.modern-table .mat-column-update,
+.modern-table .mat-column-delete {
+  text-align: center;
+  width: 88px;
+  min-width: 80px;
+  max-width: 96px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.modern-table th.mat-header-cell.mat-column-notes,
+.modern-table th.mat-header-cell.mat-column-update,
+.modern-table th.mat-header-cell.mat-column-delete {
   text-align: center;
 }
 
-td {
-  color: var(--text);
-  font-size: 0.84rem;
-}
-
-tr:hover {
-  background: color-mix(in srgb, var(--surface-soft) 65%, transparent);
-}
-
 .badge {
+  display: inline-block;
   background: color-mix(in srgb, var(--primary) 14%, var(--surface));
   color: var(--primary-strong);
   border-radius: 999px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   font-size: 0.72rem;
   font-weight: 500;
+  line-height: 1.2;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cell-link {
-  min-width: auto;
-  padding: 0 8px;
+  min-width: auto !important;
+  padding: 4px 6px !important;
+  line-height: 1.2;
   font-size: 0.8rem;
   font-weight: 600;
 }

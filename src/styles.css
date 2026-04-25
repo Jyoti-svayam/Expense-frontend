@@ -14,6 +14,7 @@
   --border: #e5e7eb;
   --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.06);
+  --section-band: linear-gradient(180deg, #eef4ff 0%, #e6eeff 100%);
 }
 
 *,
@@ -49,7 +50,109 @@ body.dark-theme {
   --border: #22314f;
   --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.28);
+  --section-band: linear-gradient(180deg, #101827 0%, #0d1526 100%);
   background: linear-gradient(180deg, #08101e 0%, #0d172b 100%);
+}
+
+/* ----- Angular Material (dark) — table, paginator, cards ----- */
+body.dark-theme mat-card.mat-card,
+body.dark-theme .mat-card {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+body.dark-theme table.mat-table,
+body.dark-theme .mat-table {
+  background: var(--surface) !important;
+}
+
+body.dark-theme tr.mat-header-row {
+  background: var(--surface-soft) !important;
+}
+
+body.dark-theme th.mat-header-cell {
+  color: var(--text-muted) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+body.dark-theme tr.mat-row {
+  background: var(--surface) !important;
+}
+
+body.dark-theme td.mat-cell {
+  color: var(--text) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+body.dark-theme tr.mat-row:hover {
+  background: var(--surface-soft) !important;
+}
+
+body.dark-theme .mat-paginator {
+  background: var(--surface) !important;
+  color: var(--text-muted) !important;
+  border-top: 1px solid var(--border);
+}
+
+body.dark-theme .mat-paginator .mat-select-value,
+body.dark-theme .mat-paginator .mat-select-arrow {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .mat-paginator-page-size-label,
+body.dark-theme .mat-paginator-range-label {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--border);
+}
+
+body.dark-theme .mat-form-field-label,
+body.dark-theme .mat-input-element {
+  color: var(--text);
+}
+
+/* ----- Auth + budget cards ----- */
+body.dark-theme .auth-card {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+body.dark-theme .auth-card h2 {
+  color: var(--text) !important;
+}
+
+body.dark-theme .auth-card .subtitle,
+body.dark-theme .auth-page .subtitle {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .auth-card input {
+  background: var(--surface-muted) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+body.dark-theme .auth-card .switch {
+  color: var(--text-muted) !important;
+}
+
+body.dark-theme .budget-card.mat-card {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+body.dark-theme .budget-card .subtitle {
+  color: var(--text-muted) !important;
+}
+
+/* ----- Footer ----- */
+body.dark-theme .app-footer {
+  background: #070b14;
+  color: var(--text-muted);
+  border-top-color: var(--border);
 }
 
 .container {

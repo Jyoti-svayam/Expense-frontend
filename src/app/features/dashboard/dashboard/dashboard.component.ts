@@ -305,7 +305,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   userExpense = 0;
   remainsBudget = 0;
   warning = '';
-  isDarkTheme = false;
 
   selectedDeleteIndex: number | null = null;
   selectedExpenseId: number | null = null;
@@ -327,24 +326,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    selectedSort: string = 'latest';
 tableDataSource = new MatTableDataSource<any>([]);
 @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  initializeTheme() {
-    const savedTheme = localStorage.getItem('dashboardTheme');
-    this.isDarkTheme = savedTheme === 'dark';
-    this.applyThemeClass();
-  }
-
-  toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    localStorage.setItem('dashboardTheme', this.isDarkTheme ? 'dark' : 'light');
-    this.applyThemeClass();
-  }
-
-  applyThemeClass() {
-    if (typeof document === 'undefined') return;
-    document.body.classList.toggle('dark-theme', this.isDarkTheme);
-  }
-  
 
   // ================= USER =================
   getUserdetails() {
@@ -614,7 +595,6 @@ deleteExpense() {
 
   // ================= INIT =================
   ngOnInit(): void {
-    this.initializeTheme();
      this.route.params.subscribe(params => {
     const page = Number(params['page']) || 1;
      this.selectedSort = 'latest';

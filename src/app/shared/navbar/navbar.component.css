@@ -47,6 +47,45 @@
   gap: 14px;
 }
 
+.theme-toggle {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #f8fafc !important;
+  line-height: 1;
+  padding: 0 10px !important;
+  min-width: auto !important;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.theme-toggle mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #e2e8f0;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.theme-label {
+  display: inline;
+}
+
+@media (max-width: 520px) {
+  .theme-label {
+    display: none;
+  }
+
+  .theme-toggle {
+    padding: 0 8px !important;
+  }
+}
+
 .links {
   color: white !important;
   text-decoration: none;
