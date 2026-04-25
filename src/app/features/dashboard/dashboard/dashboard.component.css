@@ -130,17 +130,19 @@
 
 #beforeMain {
   display: flex;
-  flex-direction: column;
-  gap: 9px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin: 0 0 12px;
 }
 
-.left-actions,
-.right-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* Add Expense + Latest — ek saath / one pair */
+.toolbar-pair {
+  display: inline-flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
 }
 
 .action-btn {
@@ -426,12 +428,6 @@
 
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  #beforeMain {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .chart-container {
