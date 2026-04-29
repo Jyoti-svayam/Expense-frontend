@@ -52,6 +52,11 @@ getAllExpense(sort?: any, page: number = 1, ) {
     return this.http.get(`${this.baseUrlExpense}?${sort}`)
   }
 
+updateExpense(id: any, data: any) {
+  return this.http.put(`${this.baseUrlExpense}/${id}`, data);
+ 
+}
+
 // getAiSummary(message: string) {
 //   return this.http.post(`${this.baseUrl}/ai-summary`, { message });
 // }
