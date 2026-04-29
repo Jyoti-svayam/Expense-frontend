@@ -450,3 +450,14 @@
     grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
   }
 }
+#beforeMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}

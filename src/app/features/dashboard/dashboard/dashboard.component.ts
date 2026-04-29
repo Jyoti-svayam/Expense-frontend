@@ -1,3 +1,11 @@
+
+
+// import * as XLSX from 'xlsx';
+// import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
 import { Component, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AiSummaryModalComponent } from '../ai-summary-modal/ai-summary-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
+
 
 Chart.register(...registerables);
 
@@ -464,4 +473,82 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       panelClass: 'custom-dialog', disableClose: false
     });
   }
+
+// ================= EXPORT EXCEL =================
+// exportToExcel() {
+//   this.budget.getAllExpense(this.selectedSort, 1, 10000).subscribe((res: any) => {
+
+//     const data = res.data.map((e: any) => ({
+//       Title: e.title,
+//       Amount: e.amount,
+//       Category: e.category,
+//       Date: e.expense_date,
+//       Payment: e.payment_method,
+//       Notes: e.notes
+//     }));
+
+//     const worksheet = XLSX.utils.json_to_sheet(data);
+//     const workbook = XLSX.utils.book_new();
+
+//     XLSX.utils.book_append_sheet(workbook, worksheet, 'Expenses');
+
+//     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+//     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+//     saveAs(blob, 'All_Expenses.xlsx');
+//   });
+// }
+
+
+
+// ================= EXPORT PDF =================
+exportToPDF() {
+  this.budget.getAllExpense(this.selectedSort, 1, 1000).subscribe((res: any) => {
+
+    const data = res.data;
+
+    const doc = new jsPDF();
+
+    // ✅ Title
+    doc.setFontSize(16);
+    doc.text('Expense Report', 14, 15);
+
+    // ✅ Date
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 22);
+
+    // ✅ Total Amount
+    const total = data.reduce((sum: number, e: any) => sum + Number(e.amount), 0);
+
+    doc.text('Total Expense: Rs ' + total, 14, 28);
+    // ✅ Table
+    autoTable(doc, {
+      startY: 35,
+      head: [['Title', 'Amount', 'Category', 'Date', 'Payment', 'Notes']],
+      body: data.map((e: any) => [
+        e.title,
+        'Rs ' + Number(e.amount),
+        // `₹${e.amount}`,
+        e.category,
+        e.expense_date,
+        e.payment_method,
+        e.notes
+      ]),
+      styles: {
+        fontSize: 9
+      },
+      headStyles: {
+        fillColor: [41, 128, 185] // blue header
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240] // light gray rows
+      }
+    });
+
+    // ✅ Save
+    doc.save('Expense_Report.pdf');
+  });
+}
+
 }

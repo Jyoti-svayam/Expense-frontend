@@ -36,10 +36,11 @@ export class BudgetService {
   //   return this.http.get(`${this.baseUrlExpense}?sort=${sort}`)
   // }
 
-getAllExpense(sort?: any, page: number = 1, ) {
-  return this.http.get(`${this.baseUrlExpense}?sort=${sort}&page=${page}`)
+getAllExpense(sort?: any, page: number = 1, limit: number = 5) {
+  return this.http.get(
+    `${this.baseUrlExpense}?sort=${sort}&page=${page}&limit=${limit}`
+  );
 }
-
 
   getAllCategories(){
     return this.http.get(`${environment.apiUrl}/categories`);

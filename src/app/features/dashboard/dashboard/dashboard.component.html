@@ -71,6 +71,7 @@
       Add Expense
     </button>
 
+    
     <div class="sort-wrapper">
       <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-btn action-btn">
         <mat-icon>tune</mat-icon>
@@ -100,12 +101,26 @@
     </div>
   </div>
 
-  <button class="ai-btn-solid action-btn" (click)="openAiSummary()">
-    <mat-icon>auto_awesome</mat-icon>
-    AI Summary
-  </button>
-</div>
 
+<!-- <button mat-raised-button color="accent" (click)="exportToExcel()">
+  <mat-icon>download</mat-icon>
+  Excel
+</button> -->
+
+ <div class="right-actions">
+    <button mat-raised-button color="warn" (click)="exportToPDF()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      Download Expenses
+    </button>
+
+
+      <button class="ai-btn-solid action-btn" (click)="openAiSummary()">
+      <mat-icon>auto_awesome</mat-icon>
+      AI Summary
+    </button>
+  </div>
+
+</div>
 
   <!-- MAIN -->
   <div class="main-section">
