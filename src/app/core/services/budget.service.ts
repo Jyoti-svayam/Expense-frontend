@@ -36,12 +36,16 @@ export class BudgetService {
   //   return this.http.get(`${this.baseUrlExpense}?sort=${sort}`)
   // }
 
-getAllExpense(sort?: any, page: number = 1, limit: number = 5) {
-  return this.http.get(
-    `${this.baseUrlExpense}?sort=${sort}&page=${page}&limit=${limit}`
-  );
+// getAllExpense(sort?: any, page: number = 1, limit: number = 5) {
+//   return this.http.get(
+//     `${this.baseUrlExpense}?sort=${sort}&page=${page}&limit=${limit}`
+//   );
+// }
+getAllExpense(sort: string = '', page: number = 1, category: string = '', limit: number = 5) {
+  let params = `sort=${sort}&page=${page}&limit=${limit}`;
+  if (category) params += `&category=${category}`;
+  return this.http.get(`${this.baseUrlExpense}?${params}`);
 }
-
   getAllCategories(){
     return this.http.get(`${environment.apiUrl}/categories`);
   }
@@ -65,4 +69,9 @@ updateExpense(id: any, data: any) {
 getAiSummary(message: string) {
   return this.http.post(`${environment.apiUrl}/summary`, { message });
 }
+
+getUserCategories() {
+  return this.http.get(`${this.baseUrlExpense}/user-categories`);
+
 }
+}  

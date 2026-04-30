@@ -57,6 +57,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     'payment', 'notes', 'update', 'delete'
   ];
 
+  selectedCategory: string = '';
+categoryList: string[] = [];
+
+
   categories: any[] = [];
   tableDataSource = new MatTableDataSource<any>([]);
 
@@ -333,9 +337,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     else if (this.selectedSort === 'high') sort = "high";
     else if (this.selectedSort === 'low') sort = "low";
 
-    this.budget.getAllExpense(sort, page).subscribe({
+    this.budget.getAllExpense(sort, page, this.selectedCategory).subscribe({
       next: (res: any) => {
         this.tableDataSource = new MatTableDataSource(res.data);
+// const allCats = res.data.map((e: any) => e.category);
+// this.categoryList = [...new Set(allCats)] as string[];
+
         this.totalRecords = res.total;
         this.tableDataSource.paginator = this.paginator;
         setTimeout(() => {
@@ -360,6 +367,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.selectedSort = type;
     this.getTableData();
   }
+
+filterByCategory(category: string) {
+  this.selectedCategory = category;
+  this.getTableData(1);
+}
+
+
 
   getSortLabel(): string {
     const map: any = { latest: 'Latest', high: 'High → Low', low: 'Low → High' };
@@ -440,11 +454,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   // ================= CATEGORY =================
   loadCategories() {
-    this.budget.getAllCategories().subscribe({
-      next: (res: any) => { this.categories = res; }
+    this.budget.getUserCategories().subscribe({
+      next: (res: any) => {
+       this.categories = res.categories; 
+        this.categoryList = res.categories; 
+      }
     });
   }
 
+  
   // ================= INIT =================
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -504,7 +522,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 // ================= EXPORT PDF =================
 exportToPDF() {
-  this.budget.getAllExpense(this.selectedSort, 1, 1000).subscribe((res: any) => {
+ this.budget.getAllExpense(this.selectedSort, 1, '', 1000).subscribe((res: any) => {
 
     const data = res.data;
 

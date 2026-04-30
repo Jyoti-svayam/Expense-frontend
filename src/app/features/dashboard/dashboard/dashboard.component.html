@@ -99,6 +99,27 @@
         </button>
       </mat-menu>
     </div>
+
+    
+<div class="sort-wrapper">
+  <button mat-button [matMenuTriggerFor]="categoryMenu" class="sort-btn action-btn">
+    <mat-icon>category</mat-icon>
+    {{ selectedCategory || 'All Categories' }}
+    <mat-icon class="arrow">expand_more</mat-icon>
+  </button>
+
+  <mat-menu #categoryMenu="matMenu" class="sort-menu">
+    <button mat-menu-item (click)="filterByCategory('')">
+      <mat-icon>all_inclusive</mat-icon>
+      <span>All Categories</span>
+      <mat-icon *ngIf="selectedCategory === ''" class="check">check</mat-icon>
+    </button>
+    <button mat-menu-item *ngFor="let cat of categoryList" (click)="filterByCategory(cat)">
+      <span>{{ cat }}</span>
+      <mat-icon *ngIf="selectedCategory === cat" class="check">check</mat-icon>
+    </button>
+  </mat-menu>
+</div>
   </div>
 
 
