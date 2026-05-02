@@ -14,9 +14,13 @@ export class AddExpenseModalComponent implements OnInit {
 
   form!: FormGroup;
   submitted = false;
+    scanning = false;
+scanned = false;
+   receiptUrl: string = '';
 
   categories: any[] = [];
 
+  
   constructor(
     private dialogRef: MatDialogRef<AddExpenseModalComponent>,
     private budget : BudgetService,
@@ -32,7 +36,9 @@ export class AddExpenseModalComponent implements OnInit {
       category: ['', Validators.required],
       payment: ['', Validators.required],
       currency: ['INR', Validators.required],
-      notes: ['']
+      notes: [''],
+      vendor: ['']
+
     });
 
     // Load categories first: mat-select needs options before patchValue or category stays invalid
@@ -57,7 +63,8 @@ export class AddExpenseModalComponent implements OnInit {
       category: this.data.category,
       payment: this.paymentFromApi(this.data.payment_method),
       currency: this.data.currency || 'INR',
-      notes: this.data.notes ?? ''
+      notes: this.data.notes ?? '',
+      vendor: this.data.vendor ?? ''
     });
     this.form.updateValueAndValidity({ emitEvent: false });
   }
@@ -127,8 +134,12 @@ export class AddExpenseModalComponent implements OnInit {
     const payload = {
       ...this.form.value,
       expense_date: this.form.value.date,
-      payment_method: this.form.value.payment
+      payment_method: this.form.value.payment,
+      vendor: this.form.value.vendor,
+      receipt_url: this.receiptUrl
     };
+     
+    console.log("Payload:", payload);
 
     if (this.data && this.data.id) {
       this.budget.updateExpense(this.data.id, payload).subscribe({
@@ -152,4 +163,86 @@ export class AddExpenseModalComponent implements OnInit {
       });
     }
   }
+
+  
+    onReceiptUpload(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  this.scanning = true;
+
+const formData = new FormData();
+formData.append('receipt', file);
+this.budget.scanReceipt(file).subscribe({
+  next: (res: any) => {
+    if (res.receiptUrl) {
+      this.receiptUrl = res.receiptUrl;
+      console.log("Receipt saved:", this.receiptUrl);
+    }
+  }
+});
+
+  this.scanned = false;
+
+  const reader = new FileReader();
+  reader.onload = async (e: any) => {
+    const imageData = e.target.result;
+
+    const Tesseract = (window as any).Tesseract;
+    
+    if (!Tesseract) {
+      console.error("Tesseract not loaded");
+      this.scanning = false;
+      return;
+    }
+
+    try {
+      const result = await Tesseract.recognize(imageData, 'eng');
+      const text = result.data.text;
+      console.log("OCR Text:", text);
+
+      // ✅ Pehle TOTAL AMOUNT dhundho, phir baaki
+      let amount = '';
+      const totalMatch = text.match(
+        /TOTAL\s*AMOUNT\s*(?:rs\.?)?\s*(\d{1,6}(?:[.,]\d{1,2})?)/i
+      );
+      if (totalMatch) {
+        amount = totalMatch[1].replace(',', '');
+      } else {
+        const amountMatch = text.match(
+          /(?:grand\s*total|net\s*amount|amount\s*paid)\s*[:\-]?\s*(?:rs\.?)?\s*(\d{1,6}(?:[.,]\d{1,2})?)/i
+        );
+        if (amountMatch) amount = amountMatch[1].replace(',', '');
+      }
+      if (amount) this.form.patchValue({ amount });
+
+      // ✅ Date dhundho - validation ke saath
+      const dateMatch = text.match(
+        /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})\b/
+      );
+      if (dateMatch) {
+        const day = parseInt(dateMatch[1]);
+        const month = parseInt(dateMatch[2]);
+        let year = dateMatch[3];
+        if (year.length === 2) year = '20' + year;
+        if (day >= 1 && day <= 31 && month >= 1 && month <= 12) {
+          const formattedDate = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+          this.form.patchValue({ date: formattedDate });
+        }
+      }
+
+      // ✅ Vendor name - pehli line
+      const lines = text.split('\n').filter((l: string) => l.trim());
+      if (lines[0]) this.form.patchValue({ vendor: lines[0].trim() });
+
+      this.scanning = false;
+      this.scanned = true;
+
+    } catch (err) {
+      console.error("OCR Error:", err);
+      this.scanning = false;
+    }
+  };
+  reader.readAsDataURL(file);
+}
 }

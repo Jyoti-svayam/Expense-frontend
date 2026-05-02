@@ -36,3 +36,43 @@ small {
   gap: 8px;
   margin-top: 10px;
 }
+
+.receipt-scanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.scan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.scan-btn:hover {
+  opacity: 0.9;
+}
+
+.scanning-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ff9800;
+  font-size: 13px;
+}
+
+.scanned-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4caf50;
+  font-size: 13px;
+}

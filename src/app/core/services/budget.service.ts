@@ -74,4 +74,11 @@ getUserCategories() {
   return this.http.get(`${this.baseUrlExpense}/user-categories`);
 
 }
+
+
+scanReceipt(file: File) {
+  const formData = new FormData();
+  formData.append('receipt', file);
+  return this.http.post(`${this.baseUrlExpense}/scan-receipt`, formData);
+}
 }  

@@ -3,6 +3,29 @@
   <button class="close-btn" (click)="close()"> ✖ </button>
 </div>
 
+<!-- RECEIPT SCANNER -->
+<div class="receipt-scanner">
+  <label for="receiptUpload" class="scan-btn">
+    <mat-icon>receipt_long</mat-icon>
+    Scan Receipt
+  </label>
+  <input 
+    type="file" 
+    id="receiptUpload" 
+    accept="image/*" 
+    style="display:none"
+    (change)="onReceiptUpload($event)"
+  >
+  <span *ngIf="scanning" class="scanning-text">
+    <mat-icon>hourglass_empty</mat-icon> Scanning...
+  </span>
+  <span *ngIf="scanned" class="scanned-text">
+    <mat-icon>check_circle</mat-icon> Receipt scanned!
+  </span>
+</div>
+
+
+
 <form [formGroup]="form" (ngSubmit)="submit(); $event.preventDefault()">
 
   <!-- TITLE -->
@@ -16,6 +39,12 @@
   <small *ngIf="submitted && f['title']?.errors?.['minlength']">
     Min 3 characters required
   </small>
+
+
+
+
+
+
 
   <!-- AMOUNT -->
   <mat-form-field appearance="outline" class="full">
@@ -31,6 +60,14 @@
     <mat-label>Date</mat-label>
     <input matInput type="date" formControlName="date">
   </mat-form-field>
+
+
+   <!-- VENDOR -->
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Vendor Name</mat-label>
+    <input matInput formControlName="vendor">
+  </mat-form-field>
+
 
   <!-- CATEGORY -->
   <!-- <mat-form-field appearance="outline" class="full">

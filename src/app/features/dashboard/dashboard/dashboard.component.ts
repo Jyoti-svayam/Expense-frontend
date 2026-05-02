@@ -51,10 +51,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedSort: string = 'latest';
 
   private expenseChart: Chart<any, any, any> | null = null;
+    private chartRendering = false
+
 
   displayedColumns: string[] = [
     'title', 'amount', 'category', 'date',
-    'payment', 'notes', 'update', 'delete'
+    'payment', 'notes', 'update', 'delete','receipt','vendor'
   ];
 
   selectedCategory: string = '';
@@ -100,6 +102,8 @@ categoryList: string[] = [];
 
   // ================= CHART =================
   renderChart() {
+     if (this.chartRendering) return;  
+  this.chartRendering = true;
     if (this.expenseChart) {
       this.expenseChart.destroy();
       this.expenseChart = null;
@@ -328,6 +332,7 @@ categoryList: string[] = [];
       },
       plugins: [datalabelsPlugin]
     } as any);
+    this.chartRendering = false; 
   }
 
   // ================= TABLE =================
