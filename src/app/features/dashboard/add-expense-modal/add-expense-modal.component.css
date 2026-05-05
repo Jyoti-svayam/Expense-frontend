@@ -1,8 +1,31 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(82vh, 720px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+:host ::ng-deep .mat-form-field.full {
+  width: 100%;
+}
+
+:host ::ng-deep .mat-form-field.full .mat-form-field-wrapper {
+  width: 100%;
+}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  flex-shrink: 0;
+  gap: 12px;
 }
 
 .modal-header h2 {
@@ -19,8 +42,11 @@
 }
 
 .full {
+  display: block;
   width: 100%;
+  max-width: 100%;
   margin-bottom: 6px;
+  box-sizing: border-box;
 }
 
 small {
@@ -75,4 +101,36 @@ small {
   gap: 4px;
   color: #4caf50;
   font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  :host {
+    max-height: min(88vh, 900px);
+  }
+
+  .modal-header h2 {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .receipt-scanner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .scan-btn {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .actions button {
+    width: 100%;
+  }
 }

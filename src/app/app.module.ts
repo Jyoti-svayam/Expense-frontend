@@ -22,6 +22,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
+
 export function playerFactory() : any {
   return player;
 }

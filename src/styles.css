@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
+  /* Fixed navbar height (see navbar.component.css); used by full-height pages */
+  --nav-bar-offset: 56px;
   --bg: #f6f8fc;
   --surface: #ffffff;
   --surface-muted: #f8fafc;
@@ -114,28 +116,31 @@ body.dark-theme .mat-input-element {
 }
 
 /* ----- Auth + budget cards ----- */
-body.dark-theme .auth-card {
+body.dark-theme .auth-page:not(.spendee-login) .auth-card {
   background: var(--surface) !important;
   border-color: var(--border) !important;
   box-shadow: var(--shadow-soft) !important;
 }
 
-body.dark-theme .auth-card h2 {
+body.dark-theme .auth-page:not(.spendee-login) .auth-card h2,
+body.dark-theme .auth-card .auth-title {
   color: var(--text) !important;
 }
 
-body.dark-theme .auth-card .subtitle,
-body.dark-theme .auth-page .subtitle {
+body.dark-theme .auth-page:not(.spendee-login) .auth-card .subtitle,
+body.dark-theme .auth-page:not(.spendee-login) .subtitle,
+body.dark-theme .auth-card .auth-lead,
+body.dark-theme .auth-page .auth-lead {
   color: var(--text-muted) !important;
 }
 
-body.dark-theme .auth-card input {
+body.dark-theme .auth-page:not(.spendee-login) .auth-card input {
   background: var(--surface-muted) !important;
   border-color: var(--border) !important;
   color: var(--text) !important;
 }
 
-body.dark-theme .auth-card .switch {
+body.dark-theme .auth-page:not(.spendee-login) .auth-card .switch {
   color: var(--text-muted) !important;
 }
 
@@ -155,6 +160,14 @@ body.dark-theme .app-footer {
   border-top-color: var(--border);
 }
 
+body.dark-theme .app-footer .footer-link {
+  color: #cbd5e1;
+}
+
+body.dark-theme .app-footer .footer-link:hover {
+  color: #fff;
+}
+
 .container {
   width: min(1120px, 92%);
   margin: 0 auto;
@@ -168,7 +181,33 @@ body.dark-theme .app-footer {
 
 .content {
   flex: 1;
-  padding-top: 72px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  /* Matches fixed navbar: 56px row + safe-area inset (see navbar.component.css) */
+  padding-top: calc(56px + env(safe-area-inset-top, 0px));
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (min-width: 769px) {
+  :root {
+    --nav-bar-offset: 64px;
+  }
+
+  .content {
+    padding-top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+  }
 }
 
 button {
@@ -176,9 +215,41 @@ button {
   font-family: inherit;
 }
 
-.custom-dialog .mat-mdc-dialog-container {
+/* Angular Material 13: legacy `mat-dialog-container` (not MDC). Support both. */
+.mat-dialog-container.custom-dialog,
+.mat-mdc-dialog-container.custom-dialog {
   border-radius: 16px;
+  box-sizing: border-box !important;
+  max-height: 90vh !important;
+  max-width: calc(100vw - 24px) !important;
+  margin: 12px auto !important;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-dialog-container.custom-dialog.expense-dialog-panel,
+.mat-mdc-dialog-container.custom-dialog.expense-dialog-panel {
+  width: min(560px, calc(100vw - 24px)) !important;
+  max-width: min(560px, calc(100vw - 24px)) !important;
+  padding: 16px 18px 20px !important;
+}
+
+.mat-dialog-container.custom-dialog.ai-summary-dialog-panel,
+.mat-mdc-dialog-container.custom-dialog.ai-summary-dialog-panel {
+  width: min(520px, calc(100vw - 24px)) !important;
+  max-width: min(520px, calc(100vw - 24px)) !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .mat-dialog-container.custom-dialog.expense-dialog-panel,
+  .mat-mdc-dialog-container.custom-dialog.expense-dialog-panel,
+  .mat-dialog-container.custom-dialog.ai-summary-dialog-panel,
+  .mat-mdc-dialog-container.custom-dialog.ai-summary-dialog-panel {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+  }
 }
 
 .cdk-overlay-backdrop {

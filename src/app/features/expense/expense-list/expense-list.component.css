@@ -1,5 +1,5 @@
 .expense-list-page {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - var(--nav-bar-offset) - env(safe-area-inset-top, 0px));
   padding: 20px;
 }
 

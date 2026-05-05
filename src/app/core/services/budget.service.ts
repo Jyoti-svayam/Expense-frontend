@@ -75,6 +75,13 @@ getUserCategories() {
 
 }
 
+  /** Sum of amounts per category (all expenses), for charts. */
+  getCategorySummary() {
+    return this.http.get<{ items: { category: string; total: number }[] }>(
+      `${this.baseUrlExpense}/category-summary`
+    );
+  }
+
 
 scanReceipt(file: File) {
   const formData = new FormData();

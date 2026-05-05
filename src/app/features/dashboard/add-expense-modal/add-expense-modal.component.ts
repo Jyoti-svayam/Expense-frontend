@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { BudgetService } from 'src/app/core/services/budget.service';
 
 @Component({
@@ -25,6 +27,8 @@ scanned = false;
     private dialogRef: MatDialogRef<AddExpenseModalComponent>,
     private budget : BudgetService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router,
       @Inject(MAT_DIALOG_DATA) public data: any   
   ) {}
 
@@ -149,6 +153,7 @@ scanned = false;
         },
         error: (err: any) => {
           console.log("❌ failed update api", err);
+          this.handleExpenseSaveError(err);
         }
       });
     } else {
@@ -159,8 +164,18 @@ scanned = false;
         },
         error: (err: any) => {
           console.log("❌ failed post api", err);
+          this.handleExpenseSaveError(err);
         }
       });
+    }
+  }
+
+  private handleExpenseSaveError(err: any): void {
+    const msg = err?.error?.message || 'Could not save expense';
+    this.toastr.error(msg);
+    if (err?.status === 403 && err?.error?.code === 'CONTACT_INCOMPLETE') {
+      this.dialogRef.close();
+      this.router.navigate(['/profile/edit']);
     }
   }
 
