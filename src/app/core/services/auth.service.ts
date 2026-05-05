@@ -23,14 +23,6 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/signup/email-otp/verify`, body);
   }
 
-  sendSignupMobileOtp(body: { email: string; mobile: string }) {
-    return this.http.post(`${this.baseUrl}/signup/mobile-otp/send`, body);
-  }
-
-  verifySignupMobileOtp(body: { mobile: string; code: string }) {
-    return this.http.post(`${this.baseUrl}/signup/mobile-otp/verify`, body);
-  }
-
   login(data: any) {
     return this.http.post(`${this.baseUrl}/login`, data);
   }

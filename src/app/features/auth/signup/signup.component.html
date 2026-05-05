@@ -66,53 +66,20 @@
         <p class="badge-verified" *ngIf="emailVerified">✓ Email verified</p>
       </div>
 
-      <div class="form-group verify-block">
-        <div class="field-with-btn">
-          <input
-            type="tel"
-            placeholder="Mobile number (10 digits, optional +91)"
-            formControlName="mobile"
-            autocomplete="tel"
-            [class.invalid]="(submitted || f['mobile']?.touched) && f['mobile']?.invalid"
-          />
-          <button
-            type="button"
-            class="btn-verify"
-            (click)="sendMobileOtp()"
-            [disabled]="mobileOtpSending || mobileVerified || f['mobile']?.invalid || !emailVerified"
-          >
-            {{ mobileVerified ? 'Verified' : (mobileOtpSending ? 'Sending…' : 'Verify') }}
-          </button>
-        </div>
+      <div class="form-group">
+        <input
+          type="tel"
+          placeholder="Mobile number (10 digits, optional +91)"
+          formControlName="mobile"
+          autocomplete="tel"
+          [class.invalid]="(submitted || f['mobile']?.touched) && f['mobile']?.invalid"
+        />
         <small *ngIf="(submitted || f['mobile']?.touched) && f['mobile']?.errors?.['required']">
           Mobile number is required
         </small>
         <small *ngIf="(submitted || f['mobile']?.touched) && f['mobile']?.errors?.['indianMobile']">
           Enter a valid Indian mobile (starts with 6–9)
         </small>
-        <p class="verify-hint muted" *ngIf="emailVerified && !mobileVerified">
-          Mobile code is sent to your email (SMS is not used on this server).
-        </p>
-        <div class="otp-row" *ngIf="mobileOtpPanelOpen && !mobileVerified">
-          <input
-            type="text"
-            inputmode="numeric"
-            maxlength="6"
-            autocomplete="one-time-code"
-            placeholder="OTP"
-            formControlName="mobileOtp"
-            class="otp-input"
-          />
-          <button
-            type="button"
-            class="btn-done"
-            (click)="verifyMobileOtpDone()"
-            [disabled]="mobileOtpVerifying"
-          >
-            {{ mobileOtpVerifying ? '…' : 'Done' }}
-          </button>
-        </div>
-        <p class="badge-verified" *ngIf="mobileVerified">✓ Mobile verified</p>
       </div>
 
       <div class="form-group">
@@ -149,7 +116,7 @@
       <button
         type="submit"
         class="primary"
-        [disabled]="loading || !emailVerified || !mobileVerified"
+        [disabled]="loading || !emailVerified"
       >
         <span *ngIf="loading">Creating account...</span>
         <span *ngIf="!loading">Signup</span>
